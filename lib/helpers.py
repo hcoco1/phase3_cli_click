@@ -4,13 +4,12 @@ from termcolor import colored
 from lib.db.models import State, County, City, Facilities
 from geopy.geocoders import Nominatim
 from geopy import exc
-from cli import Session
+from lib.db.seed import Session
 import time
 import logging
 
 
 # General CRUD Functions
-
 
 def add_entity(instance, model):
     """Add a single instance of a model to the database."""
@@ -57,7 +56,6 @@ def add_entities_general(model, entities):
             session.rollback()
             logging.error(f"Error occurred while adding entities: {e}")
             print(colored(f"Error occurred while adding entities: {e}", "red"))
-
 
 
 def update_entity_general(model, filter_criteria, update_values):

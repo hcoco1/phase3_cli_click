@@ -7,7 +7,7 @@ fake = Faker()
 states_to_add=  [
     State(
         name= fake.city(),
-        abbreviation = fake.city(),
+        abbreviation = fake.state_abbr(),
         population = random.randint(1500, 50000),
         capital = fake.city(),
         area = random.randint(500, 10000),
