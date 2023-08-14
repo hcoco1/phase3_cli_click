@@ -1,6 +1,73 @@
-from models import State, County, City, Facilities
+from lib.db.models import State, County, City, Facilities
+from faker import Faker
+import random
+fake = Faker()
 
-states_to_add = [
+
+states_to_add=  [
+    State(
+        name= fake.city(),
+        abbreviation = fake.city(),
+        population = random.randint(1500, 50000),
+        capital = fake.city(),
+        area = random.randint(500, 10000),
+
+        
+    )
+    for _ in range(52)  # Number of states
+]
+
+
+
+counties_to_add = [
+    County(
+        name= fake.city(),
+        population= random.randint(1500, 50000),
+        area= random.randint(500, 10000),
+    )
+    for _ in range(150)  # Number of states
+]
+
+cities_to_add = [
+    City(
+        name= fake.city(),
+        population = random.randint(1500, 50000),
+        area = random.randint(500, 10000),
+        latitude = 0,
+        longitude = 0,
+        county_name = fake.city()
+    )
+    for _ in range(100)  # Number of states
+]
+
+# List of different facility types
+facility_types = ["Education", "Healthcare", "Recreation", "Safety and Security", "Government", "Communication"]
+
+facilities_to_add = [
+    Facilities(
+        name=fake.company(),
+        description=fake.sentence(),
+        facility_type=facility_types[i % len(facility_types)],
+    )
+    for i in range(11)  # Number of facilities
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+states_to_add1 = [
     State(
         name="Alabama",
         abbreviation="AL",
@@ -79,7 +146,11 @@ states_to_add = [
         area=10932,
     ),
     State(
-        name="Idaho", abbreviation="ID", population=1787065, capital="Boise", area=83569
+        name="Idaho",
+        abbreviation="ID",
+        population=1787065,
+        capital="Boise",
+        area=83569
     ),
     State(
         name="Illinois",
@@ -803,7 +874,7 @@ cities = [
     },
 ]
 
-cities_to_add = [
+cities_to_add1 = [
     City(
         name="Montgomery",
         population=198525,
@@ -879,7 +950,7 @@ cities_to_add = [
 ]
 
 
-facilities_to_add = [
+facilities_to_add1 = [
     Facilities(
         name="Public School",
         description="An educational institution for children aged 5-18",
@@ -1027,7 +1098,7 @@ values_list = [
 ]
 
 
-counties_to_add = [
+counties_to_add1 = [
     County(name="Orange", population=1393452, area=903),
     County(name="Seminole", population=471826, area=309),
     County(name="Lake County", population=367118, area=953),
