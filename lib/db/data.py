@@ -4,7 +4,7 @@ import random
 fake = Faker()
 
 
-states_to_add=  [
+states_to_add1=  [
     State(
         name= fake.city(),
         abbreviation = fake.state_abbr(),
@@ -67,7 +67,7 @@ facilities_to_add = [
 
 
 
-states_to_add1 = [
+states_to_add = [
     State(
         name="Alabama",
         abbreviation="AL",

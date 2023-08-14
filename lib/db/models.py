@@ -15,6 +15,8 @@ association_table = Table(
     Column("city_id", Integer, ForeignKey("Cities.id")),
     Column("facility_id", Integer, ForeignKey("Facilities.id")),
 )
+def __repr__(self):
+    return f"<CityFacilityAssociation(city_id={self.city_id}, facility_id='{self.facility_id}')>"
 
 
 class State(Base):

@@ -1,3 +1,8 @@
+import sys
+sys.path.append('/home/hcoco1/Development/code/phase-3/phase3_cli_click')
+import os
+base_path = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(base_path)
 from prettytable.colortable import ColorTable, Themes, Theme
 from lib.db.models import State, County, City, Facilities
 
@@ -23,9 +28,9 @@ def display_states(session):
                 state.area,
             ]
         )
-    print("-" * len("STATES Table"))
-    print("STATES Table")
-    print("-" * len("STATES Table"))
+    print("-" * len("STATE Table"))
+    print("STATE Table")
+    print("-" * len("STATE Table"))
     # Print the table
     print(table)
 
@@ -53,9 +58,9 @@ def display_counties(session):
             [county.id, county.name, county.population, county.area]
         )
     # Print the title
-    print("-" * len("COUNTIES Table"))
+    print("-" * len("COUNTy Table"))
     print("COUNTIES Table")
-    print("-" * len("COUNTIES Table"))
+    print("-" * len("COUNTy Table"))
     # Print the table
     print(table)
 
@@ -124,7 +129,7 @@ def display_facilities(session):
     # Set the headers for your table columns
     table.field_names = [
         "ID",
-        "name"
+        "name",
         "Description",
         "Type"
     ]
