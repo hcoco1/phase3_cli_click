@@ -19,13 +19,47 @@ begin:
 ├── Pipfile
 ├── Pipfile.lock
 ├── README.md
-└── lib
-    ├── cli.py
-    ├── db
-    │   ├── models.py
-    │   └── seed.py
-    ├── debug.py
-    └── helpers.py
+├── __pycache__
+│   ├── test_fake_data.cpython-38.pyc
+│   └── test_helpers.cpython-38.pyc
+├── alembic.ini
+├── lib
+│   ├── __pycache__
+│   │   ├── cli.cpython-38.pyc
+│   │   ├── helpers.cpython-38.pyc
+│   │   └── test_helpers.cpython-38.pyc
+│   ├── cli.py
+│   ├── db
+│   │   ├── __pycache__
+│   │   │   ├── data.cpython-38.pyc
+│   │   │   ├── display.cpython-38.pyc
+│   │   │   ├── models.cpython-38.pyc
+│   │   │   └── seed.cpython-38.pyc
+│   │   ├── data.py
+│   │   ├── display.py
+│   │   ├── geodata.db
+│   │   ├── models.py
+│   │   ├── seed.py
+│   │   └── seed_all_data.py
+│   ├── debug.py
+│   ├── helpers.py
+│   └── user_interactions
+│       ├── user_details.txt
+│       ├── user_interaction.py
+│       └── user_scores.txt
+├── migrations
+│   ├── README
+│   ├── __pycache__
+│   │   └── env.cpython-38.pyc
+│   ├── env.py
+│   ├── script.py.mako
+│   └── versions
+│       ├── __pycache__
+│       │   └── e3fb3d80e214_initial_stage.cpython-38.pyc
+│       └── e3fb3d80e214_initial_stage.py
+└── populate_association.py
+
+10 directories, 32 files
 ```
 
 > **Note: You may already know some or all of the material covered in this
