@@ -24,6 +24,13 @@ from termcolor import colored
 import datetime
 import pyfiglet
 import random
+import requests
+
+
+
+
+
+
 
 # Constants
 INVALID_CHOICE_MESSAGE = pyfiglet.figlet_format("Invalid choice. Please try again.")
@@ -282,6 +289,82 @@ def display_user_scores():
     
     print(table)
 
+import logging
+import sys
+from io import StringIO
+import requests
+from lib.db.data import weather_icons
+api_key = "0b978281d20a02fcc45a64a4e84210c3"
+
+font_options = [
+    "standard",
+    "slant",
+    "3-d",
+    "block",
+    "bubble",
+    "digital",
+    "lean",
+    "mini",
+    "script",
+    "shadow",
+    "smscript",
+    "smslant",
+    "small",
+    "soft",
+    "tombstone",
+]
+
+def get_weather(cityname):
+    # Set the logging level of urllib3 to CRITICAL to suppress debug messages
+    logging.getLogger("urllib3").setLevel(logging.CRITICAL)
+   
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={cityname}&appid={api_key}&units=imperial"
+
+    try:
+        # Redirect stdout to a temporary buffer
+        old_stdout = sys.stdout
+        sys.stdout = StringIO()
+
+        response = requests.get(url)
+        data = response.json()
+
+        # Restore the original stdout and get captured output
+        output = sys.stdout.getvalue()
+        sys.stdout = old_stdout
+
+        if response.status_code == 404:
+            return f"City '{cityname}' not found."
+        elif response.status_code == 401:
+            return "Invalid API key. Please check your API key."
+        elif response.status_code != 200:
+            return f"An error occurred: {data.get('message', 'Unknown error')}"
+
+        temperature = data["main"]["temp"]
+        weather_status = data["weather"][0]["description"]
+        weather_icon = weather_icons.get(weather_status.lower(), "❓")
+        
+        
+        # Stylize and colorize the city name using pyfiglet
+        city_banner = pyfiglet.figlet_format(cityname.title(), font="standard")
+        city_colored = colored(city_banner, "blue")
+
+        # Construct the final message with color and stylized city name
+        final_message = (
+           
+            f"\nWeather in \n {city_colored} {temperature:.1f}°C, "
+            f"{weather_icon}   {weather_status.capitalize()}\n"
+        )
+
+        # Append the captured output before the actual output
+        return f"{output}{final_message}"
+    except requests.exceptions.RequestException as e:
+        return f"An error occurred: {str(e)}"
+
+
+
+
+
+
 
 
 
@@ -293,7 +376,8 @@ def main():
             print(colored("1. Test the database", "yellow"))
             print(colored("2. Play a game", "yellow"))
             print(colored("3. Display Scores", "yellow"))  # New Option
-            print(colored("4. Exit", "yellow"))
+            print(colored("4. Get Weather", "yellow"))  # New Option
+            print(colored("5. Exit", "yellow"))
 
             choice = input(colored("Enter your choice: ", "red"))
 
@@ -302,16 +386,20 @@ def main():
             elif choice == "2":
                 score, time_taken = play_game(session)
                 save_user_score(name=user_name, score=score, time_taken=time_taken, correct_answers=score)
-
-                # After playing the game, you'd gather the user's score, time, etc. and then:
-                # save_user_score(user_name, score, time_taken, correct_answers)
             elif choice == "3":
                 display_user_scores()
+                
             elif choice == "4":
+                city_to_check = input(colored("Enter the city name: ", "blue")).strip()
+                print(get_weather(city_to_check))
+
+
+            elif choice == "5":
                 print(GOODBYE_MESSAGE)
                 sys.exit()  # Exit the entire app
             else:
                 print(INVALID_CHOICE_MESSAGE)
+
 
 
 
