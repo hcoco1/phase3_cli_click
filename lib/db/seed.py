@@ -4,10 +4,10 @@ import os
 base_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(base_path)
 import click
-from lib.db.models import State, County, City, Facilities
+from lib.db.models import State, County, City, Facilities, Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from lib.db.data import states_to_add, counties_to_add, cities_to_add, facilities_to_add
+from lib.db.data import states_to_add, counties_to_add, cities_to_add, facilities_to_add, generate_cities_for_states
 
 # Get the absolute path of the script's directory
 base_path = os.path.dirname(os.path.abspath(__file__))
@@ -23,6 +23,15 @@ def cli():
     """Manage the database records."""
     pass
 
+
+
+@cli.command()
+def create_tables():
+    """Create all tables."""
+    Base.metadata.create_all(engine)
+    click.echo("✅ Done creating tables!")
+    
+    
 @cli.command()
 def seed_states():
     """Seed states."""
@@ -30,6 +39,8 @@ def seed_states():
     session.commit()
     session.add_all(states_to_add)
     session.commit()
+       
+    
     click.echo("✅ Done seeding states!")
 
 @cli.command()
@@ -46,8 +57,13 @@ def seed_cities():
     """Seed cities."""
     session.query(City).delete()
     session.commit()
-    session.add_all(cities_to_add)
-    session.commit()
+    cities = generate_cities_for_states(session)
+    try:
+        session.add_all(cities)
+        session.commit()
+    except Exception as e:
+        print(f"Error: {e}")
+        session.rollback()
     click.echo("✅ Done seeding cities!")
 
 @cli.command()
@@ -62,7 +78,7 @@ def seed_facilities():
 if __name__ == '__main__':
     cli()
 
-
+# To create Tables: python seed.py create_tables
 # To seed states: python seed.py seed-states
 # To seed counties: python seed.py seed-counties
 # To seed cities: python seed.py seed-cities

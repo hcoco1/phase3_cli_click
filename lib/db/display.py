@@ -85,8 +85,8 @@ def display_cities(session):
         "Population",
         "Area",
         "Latitude",
-        "Longitude",
-        "County Name",
+        "Longitude"
+       
     ]
     # Add rows to the table
 
@@ -100,7 +100,7 @@ def display_cities(session):
                 city.area,
                 city.latitude,
                 city.longitude,
-                city.county_name,
+               
                 
             ]
         )

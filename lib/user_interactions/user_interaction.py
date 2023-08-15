@@ -18,6 +18,7 @@ from lib.helpers import (
     update_entity_attribute,
     delete_entity_by_name,
 )
+from lib.db.data import states_to_play
 from termcolor import colored
 import datetime
 import pyfiglet
@@ -43,7 +44,7 @@ def print_animated_text(text, delay=0.1):
 def start():
     """Initiate the program and get user's name."""
     ascii_banner = pyfiglet.figlet_format("Database Tool!")
-    print_animated_text(ascii_banner, 0.04)
+    print_animated_text(ascii_banner, 0.004)
     print_animated_text(colored("Please enter your name (or type 'exit' to quit): \n", "blue"))
     user_name = input()
     if user_name.lower() == "exit":
@@ -208,7 +209,6 @@ def test_db(user_name):
 
 
 def play_game(session):
-    states = session.query(State).all()
     print("-" * len("Welcome to the Capital City Guessing Game!"))
     print(colored("Welcome to the Capital City Guessing Game!", "green"))
     print("-" * len("Welcome to the Capital City Guessing Game!"))
@@ -216,14 +216,13 @@ def play_game(session):
     print_animated_text(colored("Try to guess the capital city of each U.S. state. ", "blue"))
     print_animated_text(colored("Type 'exit' anytime to quit the game.\n", "blue"))
     
-
     start_time = datetime.datetime.now()
 
     correct_guesses = 0
 
-    for _ in range(5):  # Loop for exactly 10 questions
-        state = random.choice(states)  # Choose a random state
-        state_name = state.name
+    for _ in range(5):  # Loop for exactly 5 questions
+        state = random.choice(states_to_play)  # Choose a random state
+        state_name = state['name']
 
         capital_guess = (
             input(colored(f"What is the capital city of {state_name}? ", "yellow"))
@@ -240,11 +239,11 @@ def play_game(session):
             )
             break
 
-        if capital_guess == state.capital.lower():
+        if capital_guess == state['capital'].lower():
             print(colored("Correct!", "green"))
             correct_guesses += 1
         else:
-            print(colored(f"Oops! The correct answer is {state.capital}.", "red"))
+            print(colored(f"Oops! The correct answer is {state['capital']}.", "red"))
 
     end_time = datetime.datetime.now()
     elapsed_time = end_time - start_time
@@ -258,6 +257,7 @@ def play_game(session):
     print(f"You took {elapsed_time.total_seconds():.2f} seconds to answer 5 questions.")
 
     return correct_guesses, elapsed_time.total_seconds()  # Return the results
+
 
 
 def save_user_score(name, score, time_taken, correct_answers):

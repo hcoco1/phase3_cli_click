@@ -15,8 +15,6 @@ association_table = Table(
     Column("city_id", Integer, ForeignKey("Cities.id")),
     Column("facility_id", Integer, ForeignKey("Facilities.id")),
 )
-def __repr__(self):
-    return f"<CityFacilityAssociation(city_id={self.city_id}, facility_id='{self.facility_id}')>"
 
 
 class State(Base):
@@ -28,9 +26,13 @@ class State(Base):
     population = Column(Integer)
     capital = Column(String(255))
     area = Column(Float)
+    
+    # ORM relationship for Cities
+    cities = relationship("City", back_populates="state")
+
 
     def __repr__(self):
-        return f"<State(id={self.id}, name='{self.name}', abbreviation='{self.abbreviation}')>"
+        return f"<State(id={self.id}, name='{self.name}', abbreviation='{self.abbreviation}, population='{self.population}', area='{self.area}')>"
 
 
 class County(Base):
@@ -40,10 +42,14 @@ class County(Base):
     name = Column(String(255))
     population = Column(Integer)
     area = Column(Float)
+    
+    # ORM relationship for Cities
+    cities = relationship("City", back_populates="county")
+
 
 
     def __repr__(self):
-        return f"<County(id={self.id}, name='{self.name}')>"
+        return f"<County(id={self.id}, name='{self.name}', population='{self.population}', area='{self.area}'))>"
 
 
 class City(Base):
@@ -54,16 +60,19 @@ class City(Base):
     area = Column(Integer)
     latitude = Column(Float)
     longitude = Column(Float)
-    county_name = Column(String(255))
+    state_id = Column(Integer, ForeignKey("States.id"))  # Foreign Key to States
+    county_id = Column(Integer, ForeignKey("Counties.id"))  # Foreign Key to Counties
 
-    # ORM relationship
+    # ORM relationships
+    state = relationship("State", back_populates="cities")
+    county = relationship("County", back_populates="cities")
     facilities = relationship(
         "Facilities", secondary=association_table, back_populates="cities"
     )
 
 
     def __repr__(self):
-        return f"<City(id={self.id}, name='{self.name}', county='{self.county_name}')>"
+        return f"<City(id={self.id}, name='{self.name}', population='{self.population}', area='{self.area}'))>"
 
 
 class Facilities(Base):
