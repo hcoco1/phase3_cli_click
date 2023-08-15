@@ -8,6 +8,7 @@ from lib.db.seed import Session, session
 from sqlalchemy.exc import SQLAlchemyError
 import time
 import logging
+
 user_agent_name = "GeoApp v1.0 (hcoco1@hotmail.com.com)"
 geolocator = Nominatim(user_agent=user_agent_name)
 logging.basicConfig(level=logging.DEBUG)
@@ -16,9 +17,7 @@ logging.basicConfig(level=logging.DEBUG)
 # General CRUD Functions
 
 
-
-
-def add_single_state(session, name,  population=0, area=0):
+def add_single_state(session, name, population=0, area=0):
     existing_state = session.query(State).filter_by(name=name).first()
     if existing_state:
         print(colored(f"State {name} already exists!", "yellow"))
@@ -32,9 +31,9 @@ def add_single_state(session, name,  population=0, area=0):
     except SQLAlchemyError as e:
         session.rollback()
         print(colored(f"Error adding state {name}: {e} Try again!", "red"))
-        
-        
-def add_single_city(session, name,  population=0, area=0):
+
+
+def add_single_city(session, name, population=0, area=0):
     existing_city = session.query(City).filter_by(name=name).first()
     if existing_city:
         print(colored(f"City {name} already exists!", "yellow"))
@@ -48,48 +47,61 @@ def add_single_city(session, name,  population=0, area=0):
     except SQLAlchemyError as e:
         session.rollback()
         print(colored(f"Error adding city {name}: {e} Try again!", "red"))
-        
-        
-def add_single_county(session, name,  population=0, area=0):
-        existing_county = session.query(County).filter_by(name=name).first()
-        if existing_county:
-            print(colored(f"County {name} already exists!", "yellow"))
-            return
 
-        try:
-            new_county = County(name=name, population=population, area=area)
-            session.add(new_county)
-            session.commit()
-            print(f"County {name} added successfully!")
-        except SQLAlchemyError as e:
-            session.rollback()
-            print(colored(f"Error adding county {name}: {e} Try again!", "red"))
-            
+
+def add_single_county(session, name, population=0, area=0):
+    existing_county = session.query(County).filter_by(name=name).first()
+    if existing_county:
+        print(colored(f"County {name} already exists!", "yellow"))
+        return
+
+    try:
+        new_county = County(name=name, population=population, area=area)
+        session.add(new_county)
+        session.commit()
+        print(f"County {name} added successfully!")
+    except SQLAlchemyError as e:
+        session.rollback()
+        print(colored(f"Error adding county {name}: {e} Try again!", "red"))
+
+
 # UPDATE
 
 
+def update_entity_attribute(session, entity_type, entity_name, attribute, new_value):
+    # Convert space-separated attribute names to snake_case
+    attribute_snake_case = attribute.replace(" ", "_").lower()
+
+    # Fetch the entity
+    entity_to_update = session.query(entity_type).filter_by(name=entity_name).first()
+
+    if not entity_to_update:
+        print(colored(f"{entity_type.__name__} named '{entity_name}' not found!", "red"))
+        return
+
+    # Check if the entity has the attribute
+    if not hasattr(entity_to_update, attribute_snake_case):
+        print(colored(f"{entity_type.__name__} does not have an attribute named '{attribute}'", "red"))
+        return
+
+    # Display the old value
+    print(colored(f"Before update: {getattr(entity_to_update, attribute_snake_case)}", "yellow"))
 
 
-def update_entity_attribute(session, entity_cls, entity_name, attribute, new_value):
-    entity_to_update = session.query(entity_cls).filter_by(name=entity_name).first()
+    # Update the attribute with the new value
+    setattr(entity_to_update, attribute_snake_case, new_value)
+    session.commit()
 
-    if entity_to_update:
-        print(colored("Before update:", getattr(entity_to_update, attribute), "yellow"))
-        setattr(entity_to_update, attribute, new_value)
-        session.commit()
-        print(colored("After update:", getattr(entity_to_update, attribute), "green"))
-    else:
-        print(colored(f"{entity_cls.__name__} {entity_name} not found!", "red"))
+    # Display the updated value
+    print(colored(f"After update: {getattr(entity_to_update, attribute_snake_case)}", "green"))
+
 
 
 # Usage example
 # update_entity_attribute(session, State, "California", "population", 40000000)
 
 
-
 # DELETE
-
-
 
 
 def delete_entity_by_name(session, entity_cls, entity_name):
@@ -99,71 +111,53 @@ def delete_entity_by_name(session, entity_cls, entity_name):
         if entity:
             session.delete(entity)
             session.commit()
-            print(colored(f"{entity_cls.__name__} {entity_name} deleted successfully!", "green"))
+            print(
+                colored(
+                    f"{entity_cls.__name__} {entity_name} deleted successfully!",
+                    "green",
+                )
+            )
         else:
             print(f"{entity_cls.__name__} {entity_name} not found!")
     except SQLAlchemyError as e:
         session.rollback()
-        print(colored(f"Error deleting {entity_cls.__name__} {entity_name}: {e}", "red"))
+        print(
+            colored(f"Error deleting {entity_cls.__name__} {entity_name}: {e}", "red")
+        )
         print("Rollback executed due to exception.")
 
+
 # Usage example
-#delete_entity_by_name(session, State, "California")
-#delete_entity_by_name(session, County, "Los Angeles County")
-#delete_entity_by_name(session, City, "Los Angeles")
+# delete_entity_by_name(session, State, "California")
+# delete_entity_by_name(session, County, "Los Angeles County")
+# delete_entity_by_name(session, City, "Los Angeles")
 
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+def add_single_entity(session, entity_type, name, population=0, area=0):
+    existing_entity = session.query(entity_type).filter_by(name=name).first()
+    if existing_entity:
+        print(colored(f"{entity_type.__name__} {name} already exists!", "yellow"))
+        return
 
-
-def add_entity(instance, model):
-    """Add a single instance of a model to the database."""
-    with Session() as session:
-        try:
-            # Check if the instance exists before adding.
-            existing = session.query(model).filter_by(name=instance).first()
-            if not existing:
-                session.add(instance)
-                session.commit()
-                print(
-                    colored(
-                        f"{model.__name__} with ID {instance.id} added successfully!",
-                        "green",
-                    )
-                )
-            else:
-                print(
-                    colored(
-                        f"{model.__name__} with ID {instance.id} already exists!",
-                        "yellow",
-                    )
-                )
-        except Exception as e:
-            session.rollback()
-            print(
-                colored(
-                    f"Error occurred while adding {model.__name__} with ID {instance.id}: {e}",
-                    "red",
-                )
+    try:
+        new_entity = entity_type(name=name, population=population, area=area)
+        session.add(new_entity)
+        session.commit()
+        print(f"{entity_type.__name__} {name} added successfully!")
+    except SQLAlchemyError as e:
+        session.rollback()
+        print(
+            colored(
+                f"Error adding {entity_type.__name__.lower()} {name}: {e} Try again!",
+                "red",
             )
+        )
+
+
+# add_single_entity(session, State, "California", 40000000, 423967)
+# add_single_entity(session, City, "Los Angeles", 4000000, 503)
+# add_single_entity(session, County, "Los Angeles County", 10000000, 4750)
+
 
 def add_entities_general(model, entities):
     with Session() as session:
@@ -175,6 +169,7 @@ def add_entities_general(model, entities):
             session.rollback()
             logging.error(f"Error occurred while adding entities: {e}")
             print(colored(f"Error occurred while adding entities: {e}", "red"))
+
 
 def update_entity_general(model, filter_criteria, update_values):
     """Update attributes of an entity based on filter criteria."""
@@ -189,6 +184,7 @@ def update_entity_general(model, filter_criteria, update_values):
             session.rollback()
             print(colored(f"Error occurred while updating entities: {e}", "red"))
 
+
 def delete_entities_general(model, filter_criteria):
     """Delete entities of a given model based on filter criteria."""
     with Session() as session:
@@ -200,6 +196,7 @@ def delete_entities_general(model, filter_criteria):
         except Exception as e:
             session.rollback()
             print(colored(f"Error occurred while deleting entities: {e}", "red"))
+
 
 def populate_city_facility_association(values_list):
     """Populate the association table between cities and facilities."""
@@ -227,6 +224,7 @@ def populate_city_facility_association(values_list):
                 )
             )
 
+
 def print_city_facilities(session):
     """Print facilities associated with each city."""
 
@@ -245,15 +243,22 @@ def print_city_facilities(session):
         )
         print("=" * 30)
 
-def update_city_coordinates():
-    """Update city coordinates using the geolocation service."""
+
+def update_city_coordinates(city_name=None):
+    """Update city coordinates using the geolocation service. If city_name is provided, updates only for that city."""
     with Session() as session:
-        # Fetch all cities with latitude and longitude values equal to 0
-        cities_to_update = (
-            session.query(City)
-            .filter((City.latitude == 0) & (City.longitude == 0))
-            .all()
+        # Filter criteria for latitude and longitude values equal to 0 or None
+        filter_criteria = (
+            ((City.latitude == 0) | (City.latitude == None)) &
+            ((City.longitude == 0) | (City.longitude == None))
         )
+
+        # If a city_name is provided, add it to the filter criteria
+        if city_name:
+            filter_criteria &= (City.name == city_name)
+
+        # Fetch cities based on filter criteria
+        cities_to_update = session.query(City).filter(filter_criteria).all()
 
         for city in cities_to_update:
             try:
@@ -261,9 +266,8 @@ def update_city_coordinates():
                 if location:
                     city.latitude = location.latitude
                     city.longitude = location.longitude
-                    print(
-                        f"Updated coordinates for {city.name}: {city.latitude}, {city.longitude}"
-                    )
+                    session.add(city)  # Ensure changes are staged for commit
+                    print(f"Updated coordinates for {city.name}: {city.latitude}, {city.longitude}")
                 else:
                     print(f"No coordinates found for {city.name}. Skipping...")
                 time.sleep(1)  # Delay for 1 second between successful requests
@@ -272,15 +276,13 @@ def update_city_coordinates():
             except exc.GeocoderUnavailable:
                 print(f"Geocoding service unavailable for {city.name}. Skipping...")
             except Exception as e:
-                print(
-                    colored(
-                        f"Unexpected error for {city.name}: {e}. Skipping...", "red"
-                    )
-                )
+                print(colored(f"Unexpected error for {city.name}: {e}. Skipping...", "red"))
 
-        # Commit all changes after updating all cities
+        # Commit all changes after updating cities
         try:
             session.commit()
         except Exception as e:
             session.rollback()
             print(colored(f"Error occurred while committing changes: {e}", "red"))
+
+

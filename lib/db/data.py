@@ -33,8 +33,8 @@ cities_to_add = [
         name= fake.city(),
         population = random.randint(1500, 50000),
         area = random.randint(500, 10000),
-        latitude = 0,
-        longitude = 0,
+        latitude = fake.coordinate(),
+        longitude = fake.coordinate(),
         county_name = fake.city()
     )
     for _ in range(100)  # Number of states

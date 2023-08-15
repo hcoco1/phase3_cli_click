@@ -153,6 +153,46 @@ def display_facilities(session):
     print("-" * len("FACILITIES Table"))
     # Print the table
     print(table)
+    
+    
+    
+    
+    
+    
+def display_entity(session, entity_type, entity_name=None):
+    # Backup original query method
+    original_query = session.query
+
+    # Mock the query method to filter the results
+    def mock_query(*args, **kwargs):
+        # Call the original query method
+        query = original_query(*args, **kwargs)
+        # Filter the results by entity_name if provided
+        if entity_name:
+            return query.filter_by(name=entity_name)
+        return query
+
+    # Replace session's query method temporarily
+    session.query = mock_query
+
+    if entity_type == State:
+        display_states(session)
+    elif entity_type == City:
+        
+        display_cities(session)
+    elif entity_type == County:
+        
+        display_counties(session)
+
+    
+    session.query = original_query
+
+# Usage:
+# display_entity(session, State, "California")
+# display_entity(session, City, "Los Angeles")
+# display_entity(session, County, "Los Angeles County")
+
+
 
 
     session.close()

@@ -3,6 +3,7 @@ sys.path.append("/home/hcoco1/Development/code/phase-3/phase3_cli_click")
 import os
 base_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(base_path)
+
 from lib.db.models import State, City, County
 from lib.db.seed import session
 from lib.db.display import (
@@ -10,47 +11,41 @@ from lib.db.display import (
     display_counties,
     display_cities,
     display_facilities,
+    display_entity
 )
 from lib.helpers import (
-    add_single_state,
-    add_single_city,
-    add_single_county,
+    add_single_entity,
     update_city_coordinates,
     update_entity_attribute,
     delete_entity_by_name,
+    
 )
 from termcolor import colored
 import datetime
 import pyfiglet
-import datetime
 import random
+
+# Constants
+INVALID_CHOICE_MESSAGE = pyfiglet.figlet_format("Invalid choice. Please try again.")
+GOODBYE_MESSAGE = pyfiglet.figlet_format("Goodbye!")
 
 
 def start():
+    """Initiate the program and get user's name."""
     ascii_banner = pyfiglet.figlet_format("Database Tool!")
     print(ascii_banner)
-    # Ask the user for their name
-    user_name = input(
-        colored("Please enter your name (or type 'exit' to quit): ", "blue")
-    )
+    user_name = input(colored("Please enter your name (or type 'exit' to quit): ", "blue"))
     if user_name.lower() == "exit":
-        print(pyfiglet.figlet_format("Goodbye!!!"))
+        print(GOODBYE_MESSAGE)
         sys.exit()  # Exit the entire app
 
-    ascii_banner = pyfiglet.figlet_format(f"Hello {user_name}!")
-    print(ascii_banner)
-    # Get the current date and time
+   
+    print(colored(f"Hello {user_name}!", "magenta"))
     current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    # Open a text file in append mode and save the details
     with open("user_details.txt", "a") as file:
         file.write(f"{user_name}, {current_datetime}\n")
-
     print(colored(f"Your name was saved successfully in our local storage!", "red"))
-    
     return user_name
-
-
 
 
 def test_db(user_name):
@@ -78,19 +73,24 @@ def test_db(user_name):
             display_counties(session)
             display_cities(session)
             display_facilities(session)
+                   
 
         elif choice == "2":
             name = input(colored("Enter state name: ", "blue")).strip().lower()
-            add_single_state(session, name.title(), population=0, area=0)
+            add_single_entity(session, entity_type=State, name=name.title(), population=0, area=0)
+            display_entity(session, entity_type=State, entity_name=name.title())
 
         elif choice == "3":
             name = input(colored("Enter city name: ", "blue")).strip().lower()
-            add_single_city(session, name.title(), population=0, area=0)
-            update_city_coordinates()
+            add_single_entity(session, entity_type=City, name=name.title(), population=0, area=0)
+            update_city_coordinates(city_name=name.title())
+            display_entity(session, entity_type=City, entity_name=name.title())
+            
 
         elif choice == "4":
             name = input(colored("Enter county name: ", "blue")).strip().lower()
-            add_single_county(session, name.title(), population=0, area=0)
+            add_single_entity(session, entity_type=County, name=name.title(), population=0, area=0)
+            display_entity(session, entity_type=County, entity_name=name.title())
 
         elif choice == "5":
             entity_name = (
@@ -106,11 +106,12 @@ def test_db(user_name):
             new_value = input(colored("Enter the new value: ", "blue")).strip().lower()
             update_entity_attribute(
                 session,
-                entity_cls=State,
+                entity_type=State,
                 entity_name=entity_name.title(),
                 attribute=attribute,
                 new_value=new_value,
             )
+            display_entity(session, entity_type=State, entity_name=entity_name.title())
 
         elif choice == "6":
             entity_name = (
@@ -124,13 +125,8 @@ def test_db(user_name):
                 .lower()
             )
             new_value = input(colored("Enter the new value: ", "blue")).strip().lower()
-            update_entity_attribute(
-                session,
-                entity_cls=City,
-                entity_name=entity_name.title(),
-                attribute=attribute,
-                new_value=new_value,
-            )
+            update_entity_attribute(session, entity_type=City, entity_name=entity_name.title(), attribute=attribute, new_value=new_value)
+            display_entity(session, entity_type=City, entity_name=entity_name.title())
 
         elif choice == "7":
             entity_name = (
@@ -146,45 +142,48 @@ def test_db(user_name):
             new_value = input(colored("Enter the new value: ", "blue")).strip().lower()
             update_entity_attribute(
                 session,
-                entity_cls=County,
+                entity_type=County,
                 entity_name=entity_name.title(),
                 attribute=attribute,
                 new_value=new_value,
             )
+            display_entity(session, entity_type=County, entity_name=entity_name.title())
 
         elif choice == "8":
             entity_name = (
-                input(colored("Enter state name to delete: ", "blue")).strip().lower()
+                input(colored("Enter state name to delete: ", "blue"))
             )
             delete_entity_by_name(
                 session,
-                entity_name=entity_name.title(),
+                entity_name=entity_name,
                 entity_cls=State,
             )
+            display_states(session)
 
         elif choice == "9":
             entity_name = (
-                input(colored("Enter county name to delete: ", "blue")).strip().lower()
+                input(colored("Enter county name to delete: ", "blue"))
             )
             delete_entity_by_name(
                 session,
                 entity_name=entity_name.title(),
                 entity_cls=County,
             )
+            display_counties(session)
 
         elif choice == "10":
             entity_name = (
-                input(colored("Enter city name to delete: ", "blue")).strip().lower()
+                input(colored("Enter city name to delete: ", "blue"))
             )
             delete_entity_by_name(
                 session,
                 entity_name=entity_name.title(),
                 entity_cls=City,
             )
+            display_cities(session)
 
         elif choice == "11":
-            ascii_banner = pyfiglet.figlet_format(f"Goodbye {user_name}!!!")
-            print(ascii_banner)
+            print(colored("Redirecting to the main Menu!", "magenta"))
             break
 
         else:
@@ -196,22 +195,26 @@ def test_db(user_name):
 
 def play_game(session):
     states = session.query(State).all()
-
+    print("-" * len("Welcome to the Capital City Guessing Game!"))
     print(colored("Welcome to the Capital City Guessing Game!", "green"))
+    print("-" * len("Welcome to the Capital City Guessing Game!"))
     print("Try to guess the capital city of each U.S. state.")
     print("Type 'exit' anytime to quit the game.\n")
+    #print("-" * len("Welcome to the Capital City Guessing Game!"))
 
     start_time = datetime.datetime.now()
 
     correct_guesses = 0
 
-    for _ in range(10):  # Loop for exactly 10 questions
+    for _ in range(5):  # Loop for exactly 10 questions
         state = random.choice(states)  # Choose a random state
         state_name = state.name
-        capital_guess = input(f"What is the capital city of {state_name}? ").strip().lower()
+        
+        capital_guess = input(colored(f"What is the capital city of {state_name}? ", "yellow")).strip().lower()
+        
 
         if capital_guess == "exit":
-            print(colored(f"Thanks for playing! You guessed {correct_guesses}/10 capitals correctly.", "green"))
+            print(colored(f"Thanks for playing! You guessed {correct_guesses}/5 capitals correctly.", "green"))
             break
         
         if capital_guess == state.capital.lower():
@@ -223,47 +226,95 @@ def play_game(session):
     end_time = datetime.datetime.now()
     elapsed_time = end_time - start_time
 
-    print(colored(f"Thanks for playing! You guessed {correct_guesses}/10 capitals correctly.", "green"))
-    print(f"You took {elapsed_time.total_seconds():.2f} seconds to answer 10 questions.")
+    print(colored(f"Thanks for playing! You guessed {correct_guesses}/5 capitals correctly.", "green"))
+    print(f"You took {elapsed_time.total_seconds():.2f} seconds to answer 5 questions.")
+    
+    return correct_guesses, elapsed_time.total_seconds()  # Return the results
+    
+def save_user_score(name, score, time_taken, correct_answers):
+    with open("user_scores.txt", "a") as file:
+        file.write(f"{name},{score},{time_taken},{correct_answers}\n")
+
+def read_user_scores():
+    data = []
+    with open("user_scores.txt", "r") as file:
+        content = file.read().strip()
+        if not content:  # Check if the content is empty or whitespace
+            return data  # Return an empty list
+
+        for line in content.splitlines():
+            parts = line.split(',')
+            if len(parts) != 4:
+                print(f"Warning: Ignored malformed line in user_scores.txt: {line}")
+                continue
+            
+            name, score, time_taken, correct_answers = parts
+            
+            # Check if score and correct_answers are integers
+            if not score.isdigit() or not correct_answers.isdigit():
+                print(f"Warning: Ignored line with non-integer score or answers in user_scores.txt: {line}")
+                continue
+
+            data.append({
+                "name": name,
+                "score": int(score),
+                "time": time_taken,
+                "correct_answers": int(correct_answers)
+            })
+    return data
+
+
+
+
+
+from prettytable import PrettyTable
+
+def display_user_scores():
+    data = read_user_scores()
+    table = PrettyTable()
+    table.field_names = ["Name", "Score", "Time", "Correct Answers"]
+
+    for record in data:
+        table.add_row([record["name"], record["score"], record["time"], record["correct_answers"]])
+    print("-" * len("User's Scores"))
+    print("User's Scores")
+    print("-" * len("User's Scores"))
+    
+    print(table)
+
 
 
 
 def main():
     while True:
         user_name = start()
-        if user_name is None:
-            break  # Exit if the user wants to quit
-
         while True:
             print(colored("\nChoose an option:", "red"))
             print(colored("1. Test the database", "yellow"))
             print(colored("2. Play a game", "yellow"))
-            print(colored("3. Exit", "yellow"))
+            print(colored("3. Display Scores", "yellow"))  # New Option
+            print(colored("4. Exit", "yellow"))
 
             choice = input(colored("Enter your choice: ", "red"))
 
             if choice == "1":
                 test_db(user_name)
-
             elif choice == "2":
-                play_game()
+                score, time_taken = play_game(session)
+                save_user_score(name=user_name, score=score, time_taken=time_taken, correct_answers=score)
 
+                # After playing the game, you'd gather the user's score, time, etc. and then:
+                # save_user_score(user_name, score, time_taken, correct_answers)
             elif choice == "3":
-                ascii_banner = pyfiglet.figlet_format(f"Goodbye!")
-                print(ascii_banner)
+                display_user_scores()
+            elif choice == "4":
+                print(GOODBYE_MESSAGE)
                 sys.exit()  # Exit the entire app
-
-            elif choice == "11":
-                ascii_banner = pyfiglet.figlet_format("Goodbye!")
-                print(ascii_banner)
-                sys.exit()  # Exit the entire app
-
             else:
-                ascii_banner = pyfiglet.figlet_format(
-                    "Invalid choice. Please try again."
-                )
-                print(ascii_banner)
+                print(INVALID_CHOICE_MESSAGE)
+
 
 
 if __name__ == "__main__":
     main()
+    
