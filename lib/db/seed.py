@@ -3,8 +3,6 @@ sys.path.append('/home/hcoco1/Development/code/phase-3/phase3_cli_click')
 import os
 base_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(base_path)
-
-
 import click
 from lib.db.models import State, County, City, Facilities
 from sqlalchemy import create_engine

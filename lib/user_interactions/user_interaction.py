@@ -1,11 +1,8 @@
 import sys
-
 sys.path.append("/home/hcoco1/Development/code/phase-3/phase3_cli_click")
 import os
-
 base_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(base_path)
-
 from lib.db.models import State, City, County
 from lib.db.seed import session
 from lib.db.display import (
@@ -26,20 +23,29 @@ import datetime
 import pyfiglet
 import random
 import requests
-
+import time
+from dotenv import load_dotenv
 
 # Constants
 INVALID_CHOICE_MESSAGE = pyfiglet.figlet_format("Invalid choice. Please try again.")
 GOODBYE_MESSAGE = pyfiglet.figlet_format("Goodbye!")
 
+def print_animated_text(text):
+    for char in str(text):
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(0.1)
+        
+    
+#print_animated_text("Hello World!")
+
 
 def start():
     """Initiate the program and get user's name."""
     ascii_banner = pyfiglet.figlet_format("Database Tool!")
-    print(ascii_banner)
-    user_name = input(
-        colored("Please enter your name (or type 'exit' to quit): ", "blue")
-    )
+    print_animated_text(ascii_banner)
+    print_animated_text(colored("Please enter your name (or type 'exit' to quit): \n", "blue"))
+    user_name = input()
     if user_name.lower() == "exit":
         print(GOODBYE_MESSAGE)
         sys.exit()  # Exit the entire app
@@ -48,7 +54,8 @@ def start():
     current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open("user_details.txt", "a") as file:
         file.write(f"{user_name}, {current_datetime}\n")
-    print(colored(f"Your name was saved successfully in our local storage!", "red"))
+    
+    print_animated_text(colored("Your name was saved successfully in our local storage!\n", "red"))
     return user_name
 
 
@@ -205,9 +212,10 @@ def play_game(session):
     print("-" * len("Welcome to the Capital City Guessing Game!"))
     print(colored("Welcome to the Capital City Guessing Game!", "green"))
     print("-" * len("Welcome to the Capital City Guessing Game!"))
-    print("Try to guess the capital city of each U.S. state.")
-    print("Type 'exit' anytime to quit the game.\n")
-    # print("-" * len("Welcome to the Capital City Guessing Game!"))
+    
+    print_animated_text(colored("Try to guess the capital city of each U.S. state. ", "blue"))
+    print_animated_text(colored("Type 'exit' anytime to quit the game.\n", "blue"))
+    
 
     start_time = datetime.datetime.now()
 
@@ -333,17 +341,11 @@ font_options = [
     "soft",
     "tombstone",
 ]
-import os
-from dotenv import load_dotenv
 
-# Load environment variables from .env file
+
 load_dotenv()
-# Get the API_KEY from environment variables
 API_KEY = os.getenv("API_KEY")
-# Now you can use the API_KEY in your script
-print(
-    API_KEY
-)  # Just for demonstration, avoid printing sensitive info in real applications
+
 
 
 def get_weather(cityname):
