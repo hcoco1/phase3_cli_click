@@ -1,4 +1,5 @@
 alembic==1.11.2
+altgraph==0.17.3
 asttokens==2.2.1
 backcall==0.2.0
 bleach==6.0.0
@@ -12,6 +13,7 @@ docutils==0.20.1
 executing==1.2.0
 Faker==19.3.0
 geographiclib==2.0
+geojson==2.5.0
 geopy==2.3.0
 greenlet==2.0.2
 idna==3.4
@@ -40,7 +42,11 @@ pure-eval==0.2.2
 pycparser==2.21
 pyfiglet==0.7
 Pygments==2.16.1
+pyinstaller-hooks-contrib==2023.6
+pyowm==3.3.0
+PySocks==1.7.1
 python-dateutil==2.8.2
+python-dotenv==1.0.0
 readme-renderer==40.0
 requests==2.31.0
 requests-toolbelt==1.0.0
@@ -48,12 +54,12 @@ rfc3986==2.0.0
 rich==13.5.2
 SecretStorage==3.3.3
 six==1.16.0
+soupsieve==2.4.1
 SQLAlchemy==2.0.19
 stack-data==0.6.2
 termcolor==2.3.0
 tomli==2.0.1
 traitlets==5.9.0
-twine==4.0.2
 typing_extensions==4.7.1
 urllib3==2.0.4
 wcwidth==0.2.6

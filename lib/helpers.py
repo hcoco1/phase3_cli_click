@@ -8,10 +8,16 @@ from lib.db.seed import Session, session
 from sqlalchemy.exc import SQLAlchemyError
 import time
 import logging
+import logging
+logging.basicConfig(level=logging.INFO)
+
 
 user_agent_name = "GeoApp v1.0 (hcoco1@hotmail.com.com)"
 geolocator = Nominatim(user_agent=user_agent_name)
-logging.basicConfig(level=logging.DEBUG)
+logging.getLogger("geopy").setLevel(logging.INFO)
+logging.getLogger("urllib3").setLevel(logging.INFO)
+
+
 
 
 # General CRUD Functions
@@ -267,22 +273,19 @@ def update_city_coordinates(city_name=None):
                     city.latitude = location.latitude
                     city.longitude = location.longitude
                     session.add(city)  # Ensure changes are staged for commit
-                    print(f"Updated coordinates for {city.name}: {city.latitude}, {city.longitude}")
-                else:
-                    print(f"No coordinates found for {city.name}. Skipping...")
                 time.sleep(1)  # Delay for 1 second between successful requests
             except exc.GeocoderServiceError:
-                print(f"Service error when geocoding {city.name}. Skipping...")
+                pass
             except exc.GeocoderUnavailable:
-                print(f"Geocoding service unavailable for {city.name}. Skipping...")
+                pass
             except Exception as e:
-                print(colored(f"Unexpected error for {city.name}: {e}. Skipping...", "red"))
+                pass
 
         # Commit all changes after updating cities
         try:
             session.commit()
         except Exception as e:
             session.rollback()
-            print(colored(f"Error occurred while committing changes: {e}", "red"))
+
 
 
