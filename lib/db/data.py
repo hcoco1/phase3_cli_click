@@ -3,7 +3,7 @@ from faker import Faker
 import random
 fake = Faker()
 
-
+# fake states. Only to feed the tables. Not for plying Capital Game
 states_to_add1=  [
     State(
         name= fake.city(),
@@ -25,7 +25,7 @@ counties_to_add = [
         population= random.randint(1500, 50000),
         area= random.randint(500, 10000),
     )
-    for _ in range(150)  # Number of states
+    for _ in range(20)  # Number of states
 ]
 
 cities_to_add = [
@@ -37,7 +37,7 @@ cities_to_add = [
         longitude = fake.coordinate(),
         county_name = fake.city()
     )
-    for _ in range(100)  # Number of states
+    for _ in range(20)  # Number of states
 ]
 
 # List of different facility types
@@ -52,20 +52,7 @@ facilities_to_add = [
     for i in range(11)  # Number of facilities
 ]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# List of real states REAL DATA FROM 2019 CENSUS    
 
 states_to_add = [
     State(

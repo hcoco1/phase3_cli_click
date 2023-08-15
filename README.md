@@ -230,41 +230,50 @@ Database Structure
 
 
 
-```markdown
-{
-  "properties": [
-    {
-      "id": 1,
-      "address": "8 Hermina Center",
-      "city": "San Jose",
-      "state": "California",
-      "zip_code": "95138",
-      "listing_price": 278185,
-      "bedrooms": 8,
-      "bathrooms": 2,
-      "square_feet": 6427,
-      "listing_date": "6/22/2021",
-      "property_type": "Farm",
-      "operation_type": "Sale",
-      "image": "https://images.unsplash.com/photo-rce=unsplash_source&w=640"
-    },
-    {
-      "id": 2,
-      "address": "418 Mitchell Trail",
-      "city": "Newport News",
-      "state": "Virginia",
-      "zip_code": "23612",
-      "listing_price": 496205,
-      "bedrooms": 8,
-      "bathrooms": 1,
-      "square_feet": 1553,
-      "listing_date": "1/9/2020",
-      "property_type": "Farm",
-      "operation_type": "Rent",
-      "image": "https://images.unsplash.com/photo-159h_source&w=640"
-    }
-  ]
-}
+```console
+CREATE TABLE alembic_version (
+        version_num VARCHAR(32) NOT NULL, 
+        CONSTRAINT alembic_version_pkc PRIMARY KEY (version_num)
+);
+CREATE TABLE IF NOT EXISTS "Cities" (
+        id INTEGER NOT NULL, 
+        name VARCHAR(255), 
+        population INTEGER, 
+        area INTEGER, 
+        latitude FLOAT, 
+        longitude FLOAT, 
+        county_name VARCHAR(255), 
+        PRIMARY KEY (id)
+);
+CREATE TABLE IF NOT EXISTS "Counties" (
+        id INTEGER NOT NULL, 
+        name VARCHAR(255), 
+        population INTEGER, 
+        area FLOAT, 
+        PRIMARY KEY (id)
+);
+CREATE TABLE IF NOT EXISTS "Facilities" (
+        id INTEGER NOT NULL, 
+        name VARCHAR(255), 
+        description VARCHAR(255), 
+        facility_type VARCHAR(255), 
+        PRIMARY KEY (id)
+);
+CREATE TABLE IF NOT EXISTS "States" (
+        id INTEGER NOT NULL, 
+        name VARCHAR(255), 
+        abbreviation VARCHAR(255), 
+        population INTEGER, 
+        capital VARCHAR(255), 
+        area FLOAT, 
+        PRIMARY KEY (id)
+);
+CREATE TABLE IF NOT EXISTS "CityFacilityAssociation" (
+        city_id INTEGER, 
+        facility_id INTEGER, 
+        FOREIGN KEY(city_id) REFERENCES "Cities" (id), 
+        FOREIGN KEY(facility_id) REFERENCES "Facilities" (id)
+);
 ```
 
 

@@ -30,11 +30,11 @@ from dotenv import load_dotenv
 INVALID_CHOICE_MESSAGE = pyfiglet.figlet_format("Invalid choice. Please try again.")
 GOODBYE_MESSAGE = pyfiglet.figlet_format("Goodbye!")
 
-def print_animated_text(text):
+def print_animated_text(text, delay=0.1):
     for char in str(text):
         sys.stdout.write(char)
         sys.stdout.flush()
-        time.sleep(0.1)
+        time.sleep(delay)
         
     
 #print_animated_text("Hello World!")
@@ -43,7 +43,7 @@ def print_animated_text(text):
 def start():
     """Initiate the program and get user's name."""
     ascii_banner = pyfiglet.figlet_format("Database Tool!")
-    print_animated_text(ascii_banner)
+    print_animated_text(ascii_banner, 0.04)
     print_animated_text(colored("Please enter your name (or type 'exit' to quit): \n", "blue"))
     user_name = input()
     if user_name.lower() == "exit":
