@@ -13,15 +13,15 @@
 </div>  
 
 
-## Phase 2 Project: Real State Site.
-### Deployment link: https://phase2app.vercel.app/
+## Phase 3 Project: Database Tool.
+
 ##### Phase 2 Project repository link: https://github.com/hcoco1/phase2app
-### Database link:  https://phase2-db.onrender.com/
-##### Database repository link: https://github.com/hcoco1/phase2-dB
+
+##### Database repository link: https://github.com/hcoco1/phase3_cli_click
 
 #### Project Pitch
 
-**Real Estate Site (RES)** is a REACT/REACT-BOOTSTRAP/REACT-ROUTER app that accesses data from a web database. RES returns a collection of real estate properties for sale and rent. Each property has 13 attributes (id, address, city, state, zip code, listing price, bedrooms, bathrooms, square feet, listing date, property type, operation type, and image).
+**Database Tool (DT)** is a PYTHON/SQLALCHEMY/CLICK command line interface (CLI) that accesses data from a web database. RES returns a collection of real estate properties for sale and rent. Each property has 13 attributes (id, address, city, state, zip code, listing price, bedrooms, bathrooms, square feet, listing date, property type, operation type, and image).
 
  The App fetches all the data as soon the browser load. Users can navigate between different links thanks to react-router features. Also, users can filter and search properties by price, property type, and operation type.
 
