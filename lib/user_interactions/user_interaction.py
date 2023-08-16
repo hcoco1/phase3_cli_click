@@ -5,6 +5,7 @@ base_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(base_path)
 from lib.db.models import State, City, County
 from lib.db.seed import session
+
 from lib.db.display import (
     display_states,
     display_counties,

@@ -18,8 +18,8 @@ session = Session()
 def cli():
     pass
 
-# Associate Method 1: Adding a City to a State
-@click.command()
+
+@click.command(help="Add a city to a state")
 @click.argument('city_name')
 @click.argument('state_name')
 def add_city_to_state(city_name, state_name):
@@ -34,8 +34,8 @@ def add_city_to_state(city_name, state_name):
     session.commit()
     click.echo(f"City {city_name} added to State {state_name}!")
 
-# Associate Method 2: Linking a City to a Facility
-@click.command()
+
+@click.command(help="Link a city to a facility")
 @click.argument('city_name')
 @click.argument('facility_name')
 def link_city_to_facility(city_name, facility_name):
@@ -50,8 +50,8 @@ def link_city_to_facility(city_name, facility_name):
     session.commit()
     click.echo(f"Linked City {city_name} to Facility {facility_name}!")
 
-# Associate Method 3: Moving a City to a Different County
-@click.command()
+
+@click.command(help="Move a city to a different county")
 @click.argument('city_name')
 @click.argument('new_county_name')
 def move_city_to_county(city_name, new_county_name):
@@ -103,3 +103,11 @@ WHERE c.name = 'Pleasantville';
     """
 
 # python associate_methods.py move-city-to-county 'Pleasantville' 'Susanside'
+
+"""
+SELECT c.name AS City, co.name AS County
+FROM Cities c
+JOIN Counties co ON c.county_id = co.id
+WHERE c.name = 'Pleasantville' AND co.name = 'Susanside';
+
+"""

@@ -496,3 +496,4 @@ weather_icons = {
     "windy": "💨",
     "hail": "🌨️",
 }
+
