@@ -64,20 +64,18 @@ def start():
 def test_db(user_name):
     print("Testing the Database")
     # Add your database testing logic here
-
+    entity_map = {
+        "5": {"type": State, "name": "state"},
+        "6": {"type": City, "name": "city"},
+        "7": {"type": County, "name": "county"},
+    }
     while True:
         print(colored("\nChoose a CRUD operation:", "red"))
-        print(colored("1. Show the DataBase", "yellow"))
-        print(colored("2. Add a new State", "yellow"))
-        print(colored("3. Add a new City", "yellow"))
-        print(colored("4. Add a new County", "yellow"))
-        print(colored("5. Update a State", "yellow"))
-        print(colored("6. Update a City", "yellow"))
-        print(colored("7. Update a County", "yellow"))
-        print(colored("8. Delete a State", "yellow"))
-        print(colored("9. Delete a County", "yellow"))
-        print(colored("10. Delete a City", "yellow"))
-        print(colored("11. Exit", "yellow"))
+        print(colored("1. Show US states, cities, and counties", "yellow"))
+        print(colored("2. Add a new US Entity (State/City/County)", "yellow"))
+        print(colored("3. Update an US Entity (State/City/County)", "yellow"))
+        print(colored("4. Delete an US Entity (State/City/County)", "yellow"))
+        print(colored("5. Exit", "yellow"))
 
         choice = input(colored("Enter your choice: ", "red"))
 
@@ -88,119 +86,97 @@ def test_db(user_name):
             display_facilities(session)
 
         elif choice == "2":
-            name = input(colored("Enter state name: ", "blue")).strip().lower()
-            add_single_entity(
-                session, entity_type=State, name=name.title(), population=0, area=0
-            )
-            display_entity(session, entity_type=State, entity_name=name.title())
+            print(colored("\nChoose an entity to add:", "red"))
+            print(colored("a. State", "yellow"))
+            print(colored("b. City", "yellow"))
+            print(colored("c. County", "yellow"))
+
+            entity_choice = input(colored("Enter your choice (a/b/c): ", "blue"))
+            if entity_choice == "a":
+                entity_type = State
+                extra_ops = []
+            elif entity_choice == "b":
+                entity_type = City
+                extra_ops = [update_city_coordinates, get_weather]
+            elif entity_choice == "c":
+                entity_type = County
+                extra_ops = []
+
+            name = input(colored(f"Enter {entity_type.__name__.lower()} name: ", "blue")).strip().lower()
+            add_single_entity(session, entity_type=entity_type, name=name.title(), population=0, area=0)
+            for operation in extra_ops:
+                if operation == update_city_coordinates:
+                    operation(city_name=name.title())
+                elif operation == get_weather:
+                    print(operation(name.title()))
+
+            display_entity(session, entity_type=entity_type, entity_name=name.title())
+
 
         elif choice == "3":
-            name = input(colored("Enter city name: ", "blue")).strip().lower()
-            add_single_entity(
-                session, entity_type=City, name=name.title(), population=0, area=0
-            )
-            update_city_coordinates(city_name=name.title())
-            display_entity(session, entity_type=City, entity_name=name.title())
-            print(get_weather(name.title()))
+            print(colored("\nChoose an entity to update:", "red"))
+            print(colored("a. State", "yellow"))
+            print(colored("b. City", "yellow"))
+            print(colored("c. County", "yellow"))
+
+            entity_choice = input(colored("Enter your choice: ", "blue")).lower()
+
+            entity_map = {
+                "a": {"type": State, "name": "state"},
+                "b": {"type": City, "name": "city"},
+                "c": {"type": County, "name": "county"},
+            }
+
+            if entity_choice in entity_map:
+                entity_type = entity_map[entity_choice]["type"]
+                entity_name_input = input(
+                    colored(f"Enter the name of the {entity_map[entity_choice]['name']} to modify: ", "blue")
+                ).strip().lower()
+                attribute = input(colored("Enter the attribute to modify: ", "blue")).strip().lower()
+                new_value = input(colored("Enter the new value: ", "blue")).strip().lower()
+
+                update_entity_attribute(
+                    session,
+                    entity_type=entity_type,
+                    entity_name=entity_name_input.title(),
+                    attribute=attribute,
+                    new_value=new_value,
+                )
+                display_entity(session, entity_type=entity_type, entity_name=entity_name_input.title())
+            else:
+                print(colored("Invalid choice!", "red"))
+
 
         elif choice == "4":
-            name = input(colored("Enter county name: ", "blue")).strip().lower()
-            add_single_entity(
-                session, entity_type=County, name=name.title(), population=0, area=0
-            )
-            display_entity(session, entity_type=County, entity_name=name.title())
+            print(colored("\nChoose an entity to delete:", "red"))
+            print(colored("a. State", "yellow"))
+            print(colored("b. County", "yellow"))
+            print(colored("c. City", "yellow"))
+            
+            sub_choice = input(colored("Enter your choice: ", "blue"))
+            
+            entity_map = {
+                "a": {"type": State, "name": "state", "display": display_states},
+                "b": {"type": County, "name": "county", "display": display_counties},
+                "c": {"type": City, "name": "city", "display": display_cities}
+            }
+            
+            if sub_choice in entity_map:
+                entity_name = input(colored(f"Enter {entity_map[sub_choice]['name']} name to delete: ", "blue")).strip()
+                delete_entity_by_name(
+                    session,
+                    entity_name=entity_name.title(),
+                    entity_cls=entity_map[sub_choice]['type'],
+                )
+                entity_map[sub_choice]['display'](session)
+            else:
+                print(colored("Invalid choice!", "red"))
+
+
+
+
 
         elif choice == "5":
-            entity_name = (
-                input(colored("Enter the name of the state to modify: ", "blue"))
-                .strip()
-                .lower()
-            )
-            attribute = (
-                input(colored("Enter the attribute to modify: ", "blue"))
-                .strip()
-                .lower()
-            )
-            new_value = input(colored("Enter the new value: ", "blue")).strip().lower()
-            update_entity_attribute(
-                session,
-                entity_type=State,
-                entity_name=entity_name.title(),
-                attribute=attribute,
-                new_value=new_value,
-            )
-            display_entity(session, entity_type=State, entity_name=entity_name.title())
-
-        elif choice == "6":
-            entity_name = (
-                input(colored("Enter the name of the city to modify: ", "blue"))
-                .strip()
-                .lower()
-            )
-            attribute = (
-                input(colored("Enter the attribute to modify: ", "blue"))
-                .strip()
-                .lower()
-            )
-            new_value = input(colored("Enter the new value: ", "blue")).strip().lower()
-            update_entity_attribute(
-                session,
-                entity_type=City,
-                entity_name=entity_name.title(),
-                attribute=attribute,
-                new_value=new_value,
-            )
-            display_entity(session, entity_type=City, entity_name=entity_name.title())
-
-        elif choice == "7":
-            entity_name = (
-                input(colored("Enter the name of the county to modify: ", "blue"))
-                .strip()
-                .lower()
-            )
-            attribute = (
-                input(colored("Enter the attribute to modify: ", "blue"))
-                .strip()
-                .lower()
-            )
-            new_value = input(colored("Enter the new value: ", "blue")).strip().lower()
-            update_entity_attribute(
-                session,
-                entity_type=County,
-                entity_name=entity_name.title(),
-                attribute=attribute,
-                new_value=new_value,
-            )
-            display_entity(session, entity_type=County, entity_name=entity_name.title())
-
-        elif choice == "8":
-            entity_name = input(colored("Enter state name to delete: ", "blue"))
-            delete_entity_by_name(
-                session,
-                entity_name=entity_name,
-                entity_cls=State,
-            )
-            display_states(session)
-
-        elif choice == "9":
-            entity_name = input(colored("Enter county name to delete: ", "blue"))
-            delete_entity_by_name(
-                session,
-                entity_name=entity_name.title(),
-                entity_cls=County,
-            )
-            display_counties(session)
-
-        elif choice == "10":
-            entity_name = input(colored("Enter city name to delete: ", "blue"))
-            delete_entity_by_name(
-                session,
-                entity_name=entity_name.title(),
-                entity_cls=City,
-            )
-            display_cities(session)
-
-        elif choice == "11":
             print(colored("Redirecting to the main Menu!", "magenta"))
             break
 
@@ -399,11 +375,10 @@ def main():
         user_name = start()
         while True:
             print(colored("\nChoose an option:", "red"))
-            print(colored("1. Test the database", "yellow"))
-            print(colored("2. Play a game", "yellow"))
-            print(colored("3. Display Scores", "yellow"))  # New Option
-            print(colored("4. Get Weather", "yellow"))  # New Option
-            print(colored("5. Exit", "yellow"))
+            print(colored("1. Manage the database", "yellow"))
+            print(colored("2. Play CapitalStates game", "yellow"))
+            print(colored("3. Weather info for every city in the world", "yellow"))  # New Option
+            print(colored("4. Exit", "yellow"))
 
             choice = input(colored("Enter your choice: ", "red"))
 
@@ -417,14 +392,13 @@ def main():
                     time_taken=time_taken,
                     correct_answers=score,
                 )
-            elif choice == "3":
                 display_user_scores()
 
-            elif choice == "4":
+            elif choice == "3":
                 city_to_check = input(colored("Enter the city name: ", "blue")).strip()
                 print(get_weather(city_to_check))
 
-            elif choice == "5":
+            elif choice == "4":
                 print(GOODBYE_MESSAGE)
                 sys.exit()  # Exit the entire app
             else:

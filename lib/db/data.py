@@ -38,11 +38,13 @@ for _ in range(NUM_COUNTIES):
     counties_to_add.append(county)
 
 # Generate Facilities
-facility_types = ["Education", "Healthcare", "Recreation", "Safety and Security", "Government", "Communication"]
+facility_name = ["Public School", "Public Library", "Public Hospital", "Community Park", "Police Station", "Fire Station"]
+facility_description = ["An educational institution for children aged 5-18", "A facility where people can borrow books and access digital resources", "A healthcare institution providing treatment with specialized medical and nursing staff", "A green area reserved for recreational activities, often equipped with playgrounds, benches, and sports fields", "A building where local police officers work and where people can report crimes", "A building housing emergency equipment and personnel for firefighting"]
+facility_types = ["Education", "Healthcare", "Recreation", "Safety", "Government", "Communication"]
 for _ in range(NUM_FACILITIES):
     facility = Facilities(
-        name=fake.company(),
-        description=fake.sentence(),
+        name=random.choice(facility_name),
+        description=random.choice(facility_description),
         facility_type=random.choice(facility_types)
     )
     facilities_to_add.append(facility)
