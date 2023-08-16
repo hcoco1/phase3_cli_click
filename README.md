@@ -98,7 +98,9 @@ npm start
 
 ---
 
-![how this app works](https://github.com/hcoco1/phase2app/blob/main/db_diagram.png?raw=true) 
+![how this app works](https://github.com/hcoco1/phase3_cli_click/db_diagram.png?raw=true) 
+
+
  
 ---
 
