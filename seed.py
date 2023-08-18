@@ -1,22 +1,15 @@
-import sys
-sys.path.append('/home/hcoco1/Development/code/phase-3/phase3_cli_click')
-import os
-base_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(base_path)
 import click
-from lib.db.models import State, County, City, Facilities, Base
+
+from models import State, County, City, Facilities, Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from lib.db.data import states_to_add, counties_to_add, cities_to_add, facilities_to_add, generate_cities_for_states
+from data import states_to_add, counties_to_add, cities_to_add, facilities_to_add, generate_cities_for_states
 
-# Get the absolute path of the script's directory
-base_path = os.path.dirname(os.path.abspath(__file__))
 
-# Construct the absolute path to the database file
-database_path = os.path.join(base_path, "geodata.db")
-engine = create_engine(f"sqlite:///{database_path}")
+engine = create_engine('sqlite:///geodata.db')
 Session = sessionmaker(bind=engine)
 session = Session()
+
 
 @click.group()
 def cli():
@@ -76,6 +69,7 @@ def seed_facilities():
     click.echo("✅ Done seeding facilities!")
 
 if __name__ == '__main__':
+    print("🌱 Seeding DB...")
     cli()
 
 # To create Tables: python seed.py create_tables

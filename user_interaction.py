@@ -1,32 +1,42 @@
-import sys
-sys.path.append("/home/hcoco1/Development/code/phase-3/phase3_cli_click")
+# Standard library imports
+import datetime
+import logging
 import os
-base_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(base_path)
-from lib.db.models import State, City, County
-from lib.db.seed import session
+import random
+import sys
+import time
+from io import StringIO
 
-from lib.db.display import (
+# Third-party library imports
+from dotenv import load_dotenv
+from prettytable import PrettyTable
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from termcolor import colored
+import pyfiglet
+import requests
+
+# Application/library specific imports
+from data import states_to_play, weather_icons
+from display import (
     display_states,
     display_counties,
     display_cities,
     display_facilities,
     display_entity,
 )
-from lib.helpers import (
+from helpers import (
     add_single_entity,
     update_city_coordinates,
     update_entity_attribute,
     delete_entity_by_name,
 )
-from lib.db.data import states_to_play
-from termcolor import colored
-import datetime
-import pyfiglet
-import random
-import requests
-import time
-from dotenv import load_dotenv
+from models import State, City, County
+
+
+engine = create_engine('sqlite:///geodata.db')
+Session = sessionmaker(bind=engine)
+session = Session()
 
 # Constants
 INVALID_CHOICE_MESSAGE = pyfiglet.figlet_format("Invalid choice. Please try again.")
@@ -83,7 +93,7 @@ def test_db(user_name):
             display_states(session)
             display_counties(session)
             display_cities(session)
-            display_facilities(session)
+            # display_facilities(session)
 
         elif choice == "2":
             print(colored("\nChoose an entity to add:", "red"))
@@ -275,7 +285,7 @@ def read_user_scores():
     return data
 
 
-from prettytable import PrettyTable
+
 
 
 def display_user_scores():
@@ -294,11 +304,7 @@ def display_user_scores():
     print(table)
 
 
-import logging
-import sys
-from io import StringIO
-import requests
-from lib.db.data import weather_icons
+
 
 
 font_options = [

@@ -1,9 +1,7 @@
-from lib.db.models import State, County, City, Facilities
+from models import State, County, City, Facilities
 from faker import Faker
 import random
 fake = Faker()
-import random
-
 
 
 # Define the number of records you want for each type

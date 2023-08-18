@@ -1,9 +1,3 @@
-import sys
-sys.path.append('/home/hcoco1/Development/code/phase-3/phase3_cli_click')
-import os
-base_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(base_path)
-
 from sqlalchemy import Column, Integer, String, Float, ForeignKey, Table
 from sqlalchemy.orm import declarative_base, relationship
 

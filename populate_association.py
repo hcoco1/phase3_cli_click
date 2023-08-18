@@ -1,12 +1,7 @@
-import sys
-sys.path.append('/home/hcoco1/Development/code/phase-3/phase3_cli_click')
-import os
-base_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(base_path)
 from sqlalchemy import Table, Column, Integer, ForeignKey, text
 from termcolor import colored
-from lib.helpers import Session  # Assuming you have the Session class defined in lib.helpers
-from lib.db.models import association_table 
+from helpers import Session  # Assuming you have the Session class defined in lib.helpers
+from models import association_table 
 
 def populate_city_facility_association(values_list):
     """Populate the association table between cities and facilities."""

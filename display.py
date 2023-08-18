@@ -1,10 +1,5 @@
-import sys
-sys.path.append('/home/hcoco1/Development/code/phase-3/phase3_cli_click')
-import os
-base_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(base_path)
 from prettytable.colortable import ColorTable, Themes, Theme
-from lib.db.models import State, County, City, Facilities
+from models import State, County, City, Facilities
 
 # ALL STATES
 def display_states(session):

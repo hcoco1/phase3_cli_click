@@ -1,19 +1,13 @@
-import sys
-sys.path.append('/home/hcoco1/Development/code/phase-3/phase3_cli_click')
-import os
-base_path = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(base_path)
 import click
-from lib.db.models import State, County, City, Facilities, association_table
+from models import State, County, City, Facilities, association_table
 from sqlalchemy import create_engine, func
 from sqlalchemy.orm import sessionmaker
+from seed import Session, session
 
 
-# Construct the absolute path to the database file
-database_path = os.path.join(base_path, "geodata.db")
-engine = create_engine(f"sqlite:///{database_path}")
-Session = sessionmaker(bind=engine)
+
 session = Session()
+session.query(State).delete()
 
 @click.group()
 def cli():
@@ -47,7 +41,7 @@ def count_facilities_in_city(city_name):
     count = session.query(func.count(Facilities.id)).join(association_table).join(City).filter(City.name == city_name).scalar()
     click.echo(f"The number of facilities in {city_name} is: {count}")
 
-
+cli.add_command(count_facilities_in_city)
 
 session.close()
 
@@ -71,7 +65,9 @@ WHERE s.name = "Connecticut";
 
 """
 
-
+@click.command()
+@click.argument('age')
+def
 
 # python aggregate_methods.py average-city-population-in-state "state_name"   
 # python aggregate_methods.py average-city-population-in-state "Connecticut"
