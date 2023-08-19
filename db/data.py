@@ -1,4 +1,4 @@
-from models import State, County, City, Facilities
+from db.models import State, County, City, Facilities
 from faker import Faker
 import random
 fake = Faker()

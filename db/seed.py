@@ -1,12 +1,17 @@
 import click
-
-from models import State, County, City, Facilities, Base
-from sqlalchemy import create_engine
+from  db.models import State, County, City, Facilities, Base
 from sqlalchemy.orm import sessionmaker
-from data import states_to_add, counties_to_add, cities_to_add, facilities_to_add, generate_cities_for_states
+from db.data import states_to_add, counties_to_add, cities_to_add, facilities_to_add, generate_cities_for_states
+from sqlalchemy import create_engine, inspect
+
+DATABASE_URL = "sqlite://///home/hcoco1/Development/code/phase-3/phase3_cli_click/db/geodata.db"
+engine = create_engine(DATABASE_URL)
+
+# Use the Inspector to fetch the table names
+inspector = inspect(engine)
+print(inspector.get_table_names())
 
 
-engine = create_engine('sqlite:///geodata.db')
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -72,7 +77,7 @@ if __name__ == '__main__':
     print("🌱 Seeding DB...")
     cli()
 
-# To create Tables: python seed.py create_tables
+# To create Tables: python seed.py create-tables
 # To seed states: python seed.py seed-states
 # To seed counties: python seed.py seed-counties
 # To seed cities: python seed.py seed-cities

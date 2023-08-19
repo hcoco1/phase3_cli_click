@@ -17,7 +17,8 @@ import pyfiglet
 import requests
 
 # Application/library specific imports
-from data import states_to_play, weather_icons
+from db.seed import session
+from db.data import states_to_play, weather_icons
 from display import (
     display_states,
     display_counties,
@@ -31,12 +32,9 @@ from helpers import (
     update_entity_attribute,
     delete_entity_by_name,
 )
-from models import State, City, County
+from db.models import State, City, County
 
 
-engine = create_engine('sqlite:///geodata.db')
-Session = sessionmaker(bind=engine)
-session = Session()
 
 # Constants
 INVALID_CHOICE_MESSAGE = pyfiglet.figlet_format("Invalid choice. Please try again.")

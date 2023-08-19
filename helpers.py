@@ -5,10 +5,10 @@ import logging
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import declarative_base, sessionmaker
 from termcolor import colored
-from models import State, County, City, Facilities
+from db.models import State, County, City, Facilities
 from geopy.geocoders import Nominatim
 from geopy import exc
-from seed import Session, session
+from db.seed import Session, session
 from sqlalchemy.exc import SQLAlchemyError
 
 logging.basicConfig(level=logging.INFO)

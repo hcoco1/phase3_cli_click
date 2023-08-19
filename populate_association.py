@@ -1,7 +1,7 @@
 from sqlalchemy import Table, Column, Integer, ForeignKey, text
 from termcolor import colored
 from helpers import Session  # Assuming you have the Session class defined in lib.helpers
-from models import association_table 
+from db.models import association_table 
 
 def populate_city_facility_association(values_list):
     """Populate the association table between cities and facilities."""

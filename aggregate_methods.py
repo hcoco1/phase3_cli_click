@@ -1,8 +1,8 @@
 import click
-from models import State, County, City, Facilities, association_table
+from db.models import State, County, City, Facilities, association_table
 from sqlalchemy import create_engine, func
 from sqlalchemy.orm import sessionmaker
-from seed import Session, session
+from db.seed import Session, session
 
 
 

@@ -1,6 +1,5 @@
 from sqlalchemy import Column, Integer, String, Float, ForeignKey, Table
 from sqlalchemy.orm import declarative_base, relationship
-
 Base = declarative_base()
 
 association_table = Table(
