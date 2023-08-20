@@ -1,7 +1,6 @@
+import sys
 import time
 import logging
-import logging
-
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import declarative_base, sessionmaker
 from termcolor import colored
@@ -130,23 +129,7 @@ def populate_city_facility_association(values_list):
             )
 
 
-def print_city_facilities(session):
-    """Print facilities associated with each city."""
 
-    # Query all cities
-    cities = session.query(City).all()
-
-    # Iterate through cities and print associated facilities
-    for city in cities:
-        facilities = city.facilities or []
-        facilities_names = [facility.name for facility in facilities]
-
-        print(f"City: {city.name}")
-        print(
-            "Facilities:",
-            ", ".join(facilities_names) or "No facilities associated with this city.",
-        )
-        print("=" * 30)
 
 
 def update_city_coordinates(city_name=None):
@@ -188,3 +171,8 @@ def update_city_coordinates(city_name=None):
 
 
 
+def print_animated_text(text, delay=0.1):
+    for char in str(text):
+        sys.stdout.write(char)
+        sys.stdout.flush()
+        time.sleep(delay)

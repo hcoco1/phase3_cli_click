@@ -4,14 +4,12 @@ from sqlalchemy.orm import sessionmaker
 from db.data import states_to_add, counties_to_add, cities_to_add, facilities_to_add, generate_cities_for_states
 from sqlalchemy import create_engine, inspect
 
-DATABASE_URL = "sqlite://///home/hcoco1/Development/code/phase-3/phase3_cli_click/db/geodata.db"
+DATABASE_URL = "sqlite://///home/hcoco1/Development/code/phase-3/phase3_cli_click/lib/db/geodata.db"
 engine = create_engine(DATABASE_URL)
 
 # Use the Inspector to fetch the table names
 inspector = inspect(engine)
 print(inspector.get_table_names())
-
-
 Session = sessionmaker(bind=engine)
 session = Session()
 

@@ -65,9 +65,6 @@ WHERE s.name = "Connecticut";
 
 """
 
-@click.command()
-@click.argument('age')
-def
 
 # python aggregate_methods.py average-city-population-in-state "state_name"   
 # python aggregate_methods.py average-city-population-in-state "Connecticut"
