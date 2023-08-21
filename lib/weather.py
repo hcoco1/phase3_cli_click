@@ -21,16 +21,8 @@ def get_weather(cityname):
     url = f"http://api.openweathermap.org/data/2.5/weather?q={cityname}&appid={API_KEY}&units=imperial"
 
     try:
-        # Redirect stdout to a temporary buffer
-        old_stdout = sys.stdout
-        sys.stdout = StringIO()
-
         response = requests.get(url)
         data = response.json()
-
-        # Restore the original stdout and get captured output
-        output = sys.stdout.getvalue()
-        sys.stdout = old_stdout
 
         if response.status_code == 404:
             return f"City '{cityname}' not found."
@@ -43,19 +35,16 @@ def get_weather(cityname):
         weather_status = data["weather"][0]["description"]
         weather_icon = weather_icons.get(weather_status.lower(), "❓")
 
-        # Stylize and colorize the city name using pyfiglet
+        # Stylize 
         city_banner = pyfiglet.figlet_format(cityname.title(), font="standard")
         city_colored = colored(city_banner, "blue")
-       
 
-        # Construct the final message with color and stylized city name
+        # Construct the final message 
         final_message = (
             f"\nWeather in \n {city_colored} {temperature:.1f}°C, "
             f"{weather_icon}   {weather_status.capitalize()}\n"
         )
-       
 
-        # Append the captured output before the actual output
-        return f"{output}{final_message}"
+        return final_message
     except requests.exceptions.RequestException as e:
         return f"An error occurred: {str(e)}"
