@@ -8,8 +8,8 @@ DATABASE_URL = "sqlite://///home/hcoco1/Development/code/phase-3/phase3_cli_clic
 engine = create_engine(DATABASE_URL)
 
 # Use the Inspector to fetch the table names
-inspector = inspect(engine)
-print(inspector.get_table_names())
+# inspector = inspect(engine)
+# print(inspector.get_table_names())
 Session = sessionmaker(bind=engine)
 session = Session()
 

@@ -9,7 +9,6 @@ from geopy.geocoders import Nominatim
 from geopy import exc
 from db.seed import Session, session
 from sqlalchemy.exc import SQLAlchemyError
-
 logging.basicConfig(level=logging.INFO)
 
 

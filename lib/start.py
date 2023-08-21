@@ -5,10 +5,8 @@ from termcolor import colored
 from helpers import print_animated_text
 
 
-
-
-
 GOODBYE_MESSAGE = pyfiglet.figlet_format("Goodbye!")
+
 def start():
     """Initiate the program and get user's name."""
     ascii_banner = pyfiglet.figlet_format("Database Tool!")

@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 
 
 
+
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
@@ -45,12 +46,14 @@ def get_weather(cityname):
         # Stylize and colorize the city name using pyfiglet
         city_banner = pyfiglet.figlet_format(cityname.title(), font="standard")
         city_colored = colored(city_banner, "blue")
+       
 
         # Construct the final message with color and stylized city name
         final_message = (
             f"\nWeather in \n {city_colored} {temperature:.1f}°C, "
             f"{weather_icon}   {weather_status.capitalize()}\n"
         )
+       
 
         # Append the captured output before the actual output
         return f"{output}{final_message}"
