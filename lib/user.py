@@ -18,6 +18,7 @@ from game import play_game, save_user_score, display_user_scores
 from db.seed import session
 from db.data import states_to_play
 from test_db import test_db, session
+from helpers import print_animated_text
 
 # Constants
 INVALID_CHOICE_MESSAGE = pyfiglet.figlet_format("Invalid choice. Please try again.")
@@ -52,7 +53,7 @@ def main():
 
             elif choice == "3":
                 city_to_check = input(colored("Enter the city name: ", "blue")).strip()
-                print(get_weather(city_to_check))
+                print_animated_text(get_weather(city_to_check), 0.004)
 
             elif choice == "4":
                 print(GOODBYE_MESSAGE)

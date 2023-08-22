@@ -1,4 +1,5 @@
 import pyfiglet
+from sqlalchemy import func
 from termcolor import colored
 from db.models import State, City, County
 from display import (
@@ -19,6 +20,8 @@ from geopy.geocoders import Nominatim
 from db.seed import session
 
 
+
+
 def test_db(user_name):
     print("Testing the Database")
     entity_map = {
@@ -32,7 +35,8 @@ def test_db(user_name):
         print(colored("2. Add a new US Entity (State/City/County)", "yellow"))
         print(colored("3. Update an US Entity (State/City/County)", "yellow"))
         print(colored("4. Delete an US Entity (State/City/County)", "yellow"))
-        print(colored("5. Exit", "yellow"))
+        print(colored("5. Count the number of cities in a given state", "yellow"))
+        print(colored("6. Exit", "yellow"))
 
         choice = input(colored("Enter your choice: ", "red"))
         if choice == "1":
@@ -142,9 +146,14 @@ def test_db(user_name):
                     entity_cls=entity_map[sub_choice]["type"],
                 )
                 entity_map[sub_choice]["display"](session)
-            else:
-                print(colored("Invalid choice!", "red"))
+                
         elif choice == "5":
+            state_name = input(colored("Enter city:  ", "blue"))
+            count = session.query(func.count(City.id)).join(State).filter(State.name == state_name).scalar()
+            print(colored(f"The number of cities in {state_name} is: {count}", "blue"))
+                
+                
+        elif choice == "6":
             print(colored("Redirecting to the main Menu!", "magenta"))
             break
         else:
