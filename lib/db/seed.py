@@ -1,7 +1,7 @@
 import click
-from  db.models import State, County, City, Facilities, Base
+from  models import State, County, City, Facilities, Base
 from sqlalchemy.orm import sessionmaker
-from db.data import states_to_add, counties_to_add, cities_to_add, facilities_to_add, generate_cities_for_states
+from data import states_to_add, counties_to_add, cities_to_add, facilities_to_add
 from sqlalchemy import create_engine, inspect
 
 DATABASE_URL = "sqlite://///home/hcoco1/Development/code/phase-3/phase3_cli_click/lib/db/geodata.db"
@@ -34,9 +34,7 @@ def seed_states():
     session.query(State).delete()
     session.commit()
     session.add_all(states_to_add)
-    session.commit()
-       
-    
+    session.commit()       
     click.echo("✅ Done seeding states!")
 
 @cli.command()
@@ -53,13 +51,8 @@ def seed_cities():
     """Seed cities."""
     session.query(City).delete()
     session.commit()
-    cities = generate_cities_for_states(session)
-    try:
-        session.add_all(cities)
-        session.commit()
-    except Exception as e:
-        print(f"Error: {e}")
-        session.rollback()
+    session.add_all(cities_to_add)
+    session.commit()  
     click.echo("✅ Done seeding cities!")
 
 @cli.command()

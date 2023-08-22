@@ -21,6 +21,7 @@ class State(Base):
     area = Column(Float)
     
     # ORM relationship for Cities
+    counties = relationship("County", back_populates="state")  # New relationship
     cities = relationship("City", back_populates="state")
 
 
@@ -35,14 +36,15 @@ class County(Base):
     name = Column(String(255))
     population = Column(Integer)
     area = Column(Float)
+    state_id = Column(Integer, ForeignKey("States.id"))  # Foreign Key to States
     
-    # ORM relationship for Cities
+    # ORM relationships
+    state = relationship("State")  # Relationship to State
     cities = relationship("City", back_populates="county")
-
-
 
     def __repr__(self):
         return f"<County(id={self.id}, name='{self.name}', population='{self.population}', area='{self.area}'))>"
+
 
 
 class City(Base):
