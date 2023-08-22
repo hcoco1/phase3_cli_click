@@ -95,7 +95,7 @@ def delete_entity_by_name(session, entity_cls, entity_name):
         print("Rollback executed due to exception.")
 
 
-# Usage example
+
 # delete_entity_by_name(session, State, "California")
 # delete_entity_by_name(session, County, "Los Angeles County")
 # delete_entity_by_name(session, City, "Los Angeles")
@@ -131,13 +131,19 @@ def populate_city_facility_association(values_list):
 
 
 
+
+from sqlalchemy import or_, and_
+from sqlalchemy import exc
+
+geolocator = Nominatim(user_agent="geoapiExercises")
+
 def update_city_coordinates(city_name=None):
     """Update city coordinates using the geolocation service. If city_name is provided, updates only for that city."""
     with Session() as session:
         # Filter criteria for latitude and longitude values equal to 0 or None
-        filter_criteria = (
-            ((City.latitude == 0) | (City.latitude == None)) &
-            ((City.longitude == 0) | (City.longitude == None))
+        filter_criteria = or_(
+            and_(City.latitude == 0, City.longitude == 0),
+            and_(City.latitude == None, City.longitude == None)
         )
 
         # If a city_name is provided, add it to the filter criteria
@@ -148,25 +154,30 @@ def update_city_coordinates(city_name=None):
         cities_to_update = session.query(City).filter(filter_criteria).all()
 
         for city in cities_to_update:
-            try:
-                location = geolocator.geocode(f"{city.name}")
-                if location:
-                    city.latitude = location.latitude
-                    city.longitude = location.longitude
-                    session.add(city)  # Ensure changes are staged for commit
-                time.sleep(1)  # Delay for 1 second between successful requests
-            except exc.GeocoderServiceError:
-                pass
-            except exc.GeocoderUnavailable:
-                pass
-            except Exception as e:
-                pass
+            retries = 3
+            for attempt in range(retries):
+                try:
+                    location = geolocator.geocode(f"{city.name}")
+                    if location:
+                        city.latitude = location.latitude
+                        city.longitude = location.longitude
+                        session.add(city)  # Ensure changes are staged for commit
+                    break  # Exit the retry loop if successful
+                except (exc.GeocoderServiceError, exc.GeocoderUnavailable):
+                    pass  # Continue to the next attempt
+                except Exception as e:
+                    pass
+
+                # Delay between retries with increasing interval
+                if attempt < retries - 1:
+                    time.sleep(2 ** attempt)
 
         # Commit all changes after updating cities
         try:
             session.commit()
         except Exception as e:
             session.rollback()
+
 
 
 

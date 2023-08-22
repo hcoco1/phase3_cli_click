@@ -1,7 +1,7 @@
 import click
-from  models import State, County, City, Facilities, Base
+from  db.models import State, County, City, Facilities, Base, association_table
 from sqlalchemy.orm import sessionmaker
-from data import states_to_add, counties_to_add, cities_to_add, facilities_to_add
+from db.data import states_to_add, counties_to_add, cities_to_add, facilities_to_add
 from sqlalchemy import create_engine, inspect
 
 DATABASE_URL = "sqlite://///home/hcoco1/Development/code/phase-3/phase3_cli_click/lib/db/geodata.db"
@@ -63,6 +63,8 @@ def seed_facilities():
     session.add_all(facilities_to_add)
     session.commit()
     click.echo("✅ Done seeding facilities!")
+    
+    
 
 if __name__ == '__main__':
     print("🌱 Seeding DB...")
@@ -73,3 +75,4 @@ if __name__ == '__main__':
 # To seed counties: python seed.py seed-counties
 # To seed cities: python seed.py seed-cities
 # To seed facilities: python seed.py seed-facilities
+# To seed associations: python seed.py seed-associations

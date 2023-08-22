@@ -16,7 +16,6 @@ from start import start
 from weather import get_weather
 from game import play_game, save_user_score, display_user_scores
 from db.seed import session
-from db.data import states_to_play
 from test_db import test_db, session
 from helpers import print_animated_text
 

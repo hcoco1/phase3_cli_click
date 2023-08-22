@@ -5,7 +5,7 @@ from termcolor import colored
 from pyfiglet import figlet_format
 from prettytable import PrettyTable
 from helpers import print_animated_text
-from db.data import states_to_play
+from db.data import states_to_add
 
 
 
@@ -20,8 +20,8 @@ def play_game(session):
     start_time = datetime.datetime.now()
     correct_guesses = 0
     for _ in range(5):  # Loop for exactly 5 questions
-        state = random.choice(states_to_play)  # Choose a random state
-        state_name = state['name']
+        state = random.choice(states_to_add)  # Choose a random state
+        state_name = state.name
         capital_guess = (
             input(colored(f"What is the capital city of {state_name}? ", "yellow"))
             .strip()
@@ -37,11 +37,11 @@ def play_game(session):
             )
             break
 
-        if capital_guess == state['capital'].lower():
+        if capital_guess == state.capital.lower():
             print(colored("Correct!", "green"))
             correct_guesses += 1
         else:
-            print(colored(f"Oops! The correct answer is {state['capital']}.", "red"))
+            print(colored(f"Oops! The correct answer is {state.capital}.", "red"))
 
     end_time = datetime.datetime.now()
     elapsed_time = end_time - start_time

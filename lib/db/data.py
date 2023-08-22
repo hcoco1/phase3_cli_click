@@ -1,4 +1,4 @@
-from models import State, County, City, Facilities
+from db.models import State, County, City, Facilities, association_table
 from faker import Faker
 import random
 from sqlalchemy.orm import sessionmaker
@@ -10,35 +10,7 @@ DATABASE_URL = "sqlite://///home/hcoco1/Development/code/phase-3/phase3_cli_clic
 engine = create_engine(DATABASE_URL)
 Session = sessionmaker(bind=engine)
 session = Session()
-
-NUM_FACILITIES = 20
-
-
-facilities_to_add = []
 all_county_ids = [county.id for county in session.query(County.id).all()]
-
-
-
-
-
-
-
-
-
-# Generate Facilities
-facility_name = ["Public School", "Public Library", "Public Hospital", "Community Park", "Police Station", "Fire Station"]
-facility_description = ["An educational institution for children aged 5-18", "A facility where people can borrow books and access digital resources", "A healthcare institution providing treatment with specialized medical and nursing staff", "A green area reserved for recreational activities, often equipped with playgrounds, benches, and sports fields", "A building where local police officers work and where people can report crimes", "A building housing emergency equipment and personnel for firefighting"]
-facility_types = ["Education", "Healthcare", "Recreation", "Safety", "Government", "Communication"]
-for _ in range(NUM_FACILITIES):
-    facility = Facilities(
-        name=random.choice(facility_name),
-        description=random.choice(facility_description),
-        facility_type=random.choice(facility_types),
-        
-        
-    )
-    facilities_to_add.append(facility)
-
 
 
 
@@ -123,7 +95,11 @@ states_to_add = [
         area=10932,
     ),
     State(
-        name="Idaho", abbreviation="ID", population=1787065, capital="Boise", area=83569
+        name="Idaho",
+        abbreviation="ID",
+        population=1787065,
+        capital="Boise", area=83569,
+        
     ),
     State(
         name="Illinois",
@@ -649,7 +625,58 @@ cities_to_add=[
         City(name='Cheyenne', population=64235, area=21.1, latitude=0, longitude=0, state_id=50, county_id=choice(all_county_ids))
 ]
 
-
+facilities_to_add = [
+    Facilities (
+        name= "Public School",
+        description= "An educational institution for children aged 5-18",
+        facility_type= "Education",
+    ),
+    Facilities (
+        name= "Public Library",
+        description= "A facility where people can borrow books and access digital resources",
+        facility_type= "Education",
+    ),
+    Facilities (
+        name= "Public Hospital",
+        description= "A healthcare institution providing treatment with specialized medical and nursing staff",
+        facility_type= "Healthcare",
+    ),
+    Facilities (
+        name= "Community Park",
+        description= "A green area reserved for recreational activities, often equipped with playgrounds, benches, and sports fields",
+        facility_type= "Recreation",
+    ),
+    Facilities (
+        name= "Police Station",
+        description= "A building where local police officers work and where people can report crimes",
+        facility_type= "Safety and Security",
+    ),
+    Facilities (
+        name= "Fire Station",
+        description= "A building housing emergency equipment and personnel for firefighting",
+        facility_type= "Safety and Security",
+    ),
+    Facilities (
+        name= "Public Gym",
+        description= "A facility equipped with exercise machines and weights for physical fitness",
+        facility_type= "Recreation",
+    ),
+    Facilities (
+        name= "Municipal Office",
+        description= "An office where local government administrative activities take place",
+        facility_type= "Government",
+    ),
+    Facilities (
+        name= "Public Swimming Pool",
+        description= "A facility where individuals can swim, often overseen by lifeguards",
+        facility_type= "Recreation",
+    ),
+    Facilities (
+        name= "Post Office",
+        description= "A facility where mail is processed and sent, and where people can buy postage stamps, send packages, etc.",
+        facility_type= "Communication",
+    )
+]
 
 weather_icons = {
     "clear sky": "☀️",
@@ -725,4 +752,163 @@ weather_icons = {
     "windy": "💨",
     "hail": "🌨️",
 }
+
+
+
+
+"""
+association_to_add = [
+        CityFacilityAssociation (city_id = 1, facility_id = 3),
+        CityFacilityAssociation (city_id = 1, facility_id = 9),
+        CityFacilityAssociation (city_id = 1, facility_id = 10),
+        CityFacilityAssociation (city_id = 2, facility_id = 3),
+        CityFacilityAssociation (city_id = 2, facility_id = 4),
+        CityFacilityAssociation (city_id = 2, facility_id = 6),
+        CityFacilityAssociation (city_id = 3, facility_id = 10),
+        CityFacilityAssociation (city_id = 3, facility_id = 5),
+        CityFacilityAssociation (city_id = 3, facility_id = 2),
+        CityFacilityAssociation (city_id = 4, facility_id = 8),
+        CityFacilityAssociation (city_id = 4, facility_id = 5),
+        CityFacilityAssociation (city_id = 4, facility_id = 10),
+        CityFacilityAssociation (city_id = 5, facility_id = 4),
+        CityFacilityAssociation (city_id = 5, facility_id = 5),
+        CityFacilityAssociation (city_id = 5, facility_id = 6),
+        CityFacilityAssociation (city_id = 6, facility_id = 3),
+        CityFacilityAssociation (city_id = 6, facility_id = 5),
+        CityFacilityAssociation (city_id = 6, facility_id = 6),
+        CityFacilityAssociation (city_id = 7, facility_id = 5),
+        CityFacilityAssociation (city_id = 7, facility_id = 9),
+        CityFacilityAssociation (city_id = 7, facility_id = 4),
+        CityFacilityAssociation (city_id = 8, facility_id = 6),
+        CityFacilityAssociation (city_id = 8, facility_id = 3),
+        CityFacilityAssociation (city_id = 8, facility_id = 9),
+        CityFacilityAssociation (city_id = 9, facility_id = 10),
+        CityFacilityAssociation (city_id = 9, facility_id = 3),
+        CityFacilityAssociation (city_id = 9, facility_id = 5),
+        CityFacilityAssociation (city_id = 10, facility_id = 2),
+        CityFacilityAssociation (city_id = 10, facility_id = 8),
+        CityFacilityAssociation (city_id = 10, facility_id = 5),
+        CityFacilityAssociation (city_id = 11, facility_id = 1),
+        CityFacilityAssociation (city_id = 11, facility_id = 9),
+        CityFacilityAssociation (city_id = 11, facility_id = 6),
+        CityFacilityAssociation (city_id = 12, facility_id = 4),
+        CityFacilityAssociation (city_id = 12, facility_id = 7),
+        CityFacilityAssociation (city_id = 12, facility_id = 2),
+        CityFacilityAssociation (city_id = 13, facility_id = 5),
+        CityFacilityAssociation (city_id = 13, facility_id = 10),
+        CityFacilityAssociation (city_id = 13, facility_id = 8),
+        CityFacilityAssociation (city_id = 14, facility_id = 4),
+        CityFacilityAssociation (city_id = 14, facility_id = 3),
+        CityFacilityAssociation (city_id = 14, facility_id = 2),
+        CityFacilityAssociation (city_id = 15, facility_id = 8),
+        CityFacilityAssociation (city_id = 15, facility_id = 4),
+        CityFacilityAssociation (city_id = 15, facility_id = 6),
+        CityFacilityAssociation (city_id = 16, facility_id = 8),
+        CityFacilityAssociation (city_id = 16, facility_id = 3),
+        CityFacilityAssociation (city_id = 16, facility_id = 6),
+        CityFacilityAssociation (city_id = 17, facility_id = 2),
+        CityFacilityAssociation (city_id = 17, facility_id = 5),
+        CityFacilityAssociation (city_id = 17, facility_id = 1),
+        CityFacilityAssociation (city_id = 18, facility_id = 6),
+        CityFacilityAssociation (city_id = 18, facility_id = 8),
+        CityFacilityAssociation (city_id = 18, facility_id = 7),
+        CityFacilityAssociation (city_id = 19, facility_id = 2),
+        CityFacilityAssociation (city_id = 19, facility_id = 8),
+        CityFacilityAssociation (city_id = 19, facility_id = 4),
+        CityFacilityAssociation (city_id = 20, facility_id = 10),
+        CityFacilityAssociation (city_id = 20, facility_id = 7),
+        CityFacilityAssociation (city_id = 20, facility_id = 6),
+        CityFacilityAssociation (city_id = 21, facility_id = 9),
+        CityFacilityAssociation (city_id = 21, facility_id = 3),
+        CityFacilityAssociation (city_id = 21, facility_id = 4),
+        CityFacilityAssociation (city_id = 22, facility_id = 8),
+        CityFacilityAssociation (city_id = 22, facility_id = 2),
+        CityFacilityAssociation (city_id = 22, facility_id = 9),
+        CityFacilityAssociation (city_id = 23, facility_id = 2),
+        CityFacilityAssociation (city_id = 23, facility_id = 6),
+        CityFacilityAssociation (city_id = 23, facility_id = 10),
+        CityFacilityAssociation (city_id = 24, facility_id = 9),
+        CityFacilityAssociation (city_id = 24, facility_id = 10),
+        CityFacilityAssociation (city_id = 24, facility_id = 3),
+        CityFacilityAssociation (city_id = 25, facility_id = 1),
+        CityFacilityAssociation (city_id = 25, facility_id = 2),
+        CityFacilityAssociation (city_id = 25, facility_id = 8),
+        CityFacilityAssociation (city_id = 26, facility_id = 6),
+        CityFacilityAssociation (city_id = 26, facility_id = 8),
+        CityFacilityAssociation (city_id = 26, facility_id = 10),
+        CityFacilityAssociation (city_id = 27, facility_id = 1),
+        CityFacilityAssociation (city_id = 27, facility_id = 2),
+        CityFacilityAssociation (city_id = 27, facility_id = 7),
+        CityFacilityAssociation (city_id = 28, facility_id = 6),
+        CityFacilityAssociation (city_id = 28, facility_id = 1),
+        CityFacilityAssociation (city_id = 28, facility_id = 8),
+        CityFacilityAssociation (city_id = 29, facility_id = 8),
+        CityFacilityAssociation (city_id = 29, facility_id = 3),
+        CityFacilityAssociation (city_id = 29, facility_id = 2),
+        CityFacilityAssociation (city_id = 30, facility_id = 6),
+        CityFacilityAssociation (city_id = 30, facility_id = 7),
+        CityFacilityAssociation (city_id = 30, facility_id = 10),
+        CityFacilityAssociation (city_id = 31, facility_id = 1),
+        CityFacilityAssociation (city_id = 31, facility_id = 8),
+        CityFacilityAssociation (city_id = 31, facility_id = 2),
+        CityFacilityAssociation (city_id = 32, facility_id = 5),
+        CityFacilityAssociation (city_id = 32, facility_id = 8),
+        CityFacilityAssociation (city_id = 32, facility_id = 1),
+        CityFacilityAssociation (city_id = 33, facility_id = 3),
+        CityFacilityAssociation (city_id = 33, facility_id = 10),
+        CityFacilityAssociation (city_id = 33, facility_id = 6),
+        CityFacilityAssociation (city_id = 34, facility_id = 1),
+        CityFacilityAssociation (city_id = 34, facility_id = 7),
+        CityFacilityAssociation (city_id = 34, facility_id = 2),
+        CityFacilityAssociation (city_id = 35, facility_id = 9),
+        CityFacilityAssociation (city_id = 35, facility_id = 3),
+        CityFacilityAssociation (city_id = 35, facility_id = 1),
+        CityFacilityAssociation (city_id = 36, facility_id = 6),
+        CityFacilityAssociation (city_id = 36, facility_id = 4),
+        CityFacilityAssociation (city_id = 36, facility_id = 5),
+        CityFacilityAssociation (city_id = 37, facility_id = 10),
+        CityFacilityAssociation (city_id = 37, facility_id = 6),
+        CityFacilityAssociation (city_id = 37, facility_id = 3),
+        CityFacilityAssociation (city_id = 38, facility_id = 10),
+        CityFacilityAssociation (city_id = 38, facility_id = 7),
+        CityFacilityAssociation (city_id = 38, facility_id = 2),
+        CityFacilityAssociation (city_id = 39, facility_id = 4),
+        CityFacilityAssociation (city_id = 39, facility_id = 1),
+        CityFacilityAssociation (city_id = 39, facility_id = 5),
+        CityFacilityAssociation (city_id = 40, facility_id = 10),
+        CityFacilityAssociation (city_id = 40, facility_id = 8),
+        CityFacilityAssociation (city_id = 40, facility_id = 6),
+        CityFacilityAssociation (city_id = 41, facility_id = 8),
+        CityFacilityAssociation (city_id = 41, facility_id = 4),
+        CityFacilityAssociation (city_id = 41, facility_id = 9),
+        CityFacilityAssociation (city_id = 42, facility_id = 10),
+        CityFacilityAssociation (city_id = 42, facility_id = 9),
+        CityFacilityAssociation (city_id = 42, facility_id = 3),
+        CityFacilityAssociation (city_id = 43, facility_id = 6),
+        CityFacilityAssociation (city_id = 43, facility_id = 2),
+        CityFacilityAssociation (city_id = 43, facility_id = 8),
+        CityFacilityAssociation (city_id = 44, facility_id = 1),
+        CityFacilityAssociation (city_id = 44, facility_id = 4),
+        CityFacilityAssociation (city_id = 44, facility_id = 5),
+        CityFacilityAssociation (city_id = 45, facility_id = 4),
+        CityFacilityAssociation (city_id = 45, facility_id = 2),
+        CityFacilityAssociation (city_id = 45, facility_id = 3),
+        CityFacilityAssociation (city_id = 46, facility_id = 3),
+        CityFacilityAssociation (city_id = 46, facility_id = 9),
+        CityFacilityAssociation (city_id = 46, facility_id = 4),
+        CityFacilityAssociation (city_id = 47, facility_id = 4),
+        CityFacilityAssociation (city_id = 47, facility_id = 3),
+        CityFacilityAssociation (city_id = 47, facility_id = 10),
+        CityFacilityAssociation (city_id = 48, facility_id = 4),
+        CityFacilityAssociation (city_id = 48, facility_id = 9),
+        CityFacilityAssociation (city_id = 48, facility_id = 7),
+        CityFacilityAssociation (city_id = 49, facility_id = 2),
+        CityFacilityAssociation (city_id = 49, facility_id = 4),
+        CityFacilityAssociation (city_id = 49, facility_id = 1),
+        CityFacilityAssociation (city_id = 50, facility_id = 7),
+        CityFacilityAssociation (city_id = 50, facility_id = 5),
+        CityFacilityAssociation (city_id = 50, facility_id = 2),
+]
+"""
+
 
