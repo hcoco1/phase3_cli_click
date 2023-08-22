@@ -36,14 +36,14 @@ def test_db(user_name):
         print(colored("3. Update an US Entity (State/City/County)", "yellow"))
         print(colored("4. Delete an US Entity (State/City/County)", "yellow"))
         print(colored("5. Count the number of cities in a given state", "yellow"))
-        print(colored("6. Exit", "yellow"))
+        print(colored("6. Main Menu", "yellow"))
 
         choice = input(colored("Enter your choice: ", "red"))
         if choice == "1":
             display_states(session)
             display_counties(session)
             display_cities(session)
-            # display_facilities(session)
+            update_city_coordinates()
 
         elif choice == "2":
             print(colored("\nChoose an entity to add:", "red"))
