@@ -1,21 +1,16 @@
 import random
 from sqlalchemy.orm import sessionmaker
-
+from db.models import City, Facilities, association_table
 
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 DATABASE_URL = "sqlite://///home/hcoco1/Development/code/phase-3/phase3_cli_click/lib/db/geodata.db"
 engine = create_engine(DATABASE_URL)
+
 Session = sessionmaker(bind=engine)
 session = Session()
 
-from sqlalchemy.orm import sessionmaker
-from lib.db.models import City, Facilities, association_table
-
-
-# Create a Session
-Session = sessionmaker(bind=engine)
-session = Session()
 
 # Fetch all city IDs
 city_ids = [city.id for city in session.query(City.id).all()]

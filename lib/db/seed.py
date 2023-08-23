@@ -1,7 +1,7 @@
 import click
-from  db.models import State, County, City, Facilities, Base, association_table
+from  models import State, County, City, Facilities, association_table as CityFacilityAssociation, Base
 from sqlalchemy.orm import sessionmaker
-from db.data import states_to_add, counties_to_add, cities_to_add, facilities_to_add
+from data import states_to_add, counties_to_add, cities_to_add, facilities_to_add, association_to_add
 from sqlalchemy import create_engine, inspect
 
 DATABASE_URL = "sqlite://///home/hcoco1/Development/code/phase-3/phase3_cli_click/lib/db/geodata.db"
@@ -63,6 +63,16 @@ def seed_facilities():
     session.add_all(facilities_to_add)
     session.commit()
     click.echo("✅ Done seeding facilities!")
+    
+@cli.command()
+def seed_associations():
+    """Seed associations."""
+    session.execute(CityFacilityAssociation.delete())  # Delete existing associations
+    for association in association_to_add:
+        session.execute(CityFacilityAssociation.insert().values(**association))
+    session.commit()
+    click.echo("✅ Done seeding associations!")
+
     
     
 

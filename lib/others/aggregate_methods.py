@@ -1,5 +1,5 @@
 import click
-from db.models import State, County, City, Facilities, association_table
+from lib.db.models import State, County, City, Facilities, association_table
 from sqlalchemy import create_engine, func
 from sqlalchemy.orm import sessionmaker
 from db.seed import Session, session
