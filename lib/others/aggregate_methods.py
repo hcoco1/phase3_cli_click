@@ -74,7 +74,7 @@ WHERE s.name = "Connecticut";
 SELECT AVG(c.population) 
 FROM Cities c
 JOIN States s ON c.state_id = s.id
-WHERE s.name = "Connecticut";
+WHERE s.name = "Florida";
 
 """
 
