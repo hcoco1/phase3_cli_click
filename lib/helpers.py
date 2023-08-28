@@ -2,20 +2,15 @@ import sys
 import time
 import logging
 from sqlalchemy import create_engine, text
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.orm import  sessionmaker
 from termcolor import colored
-from db.models import State, County, City, Facilities
-from geopy.geocoders import Nominatim
-from geopy import exc
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
-logging.basicConfig(level=logging.INFO)
 
+
+logging.basicConfig(level=logging.INFO)
 sessionmaker = sessionmaker()
-user_agent_name = "GeoApp v1.0 (hcoco1@hotmail.com.com)"
-geolocator = Nominatim(user_agent=user_agent_name)
-logging.getLogger("geopy").setLevel(logging.INFO)
-logging.getLogger("urllib3").setLevel(logging.INFO)
+
 
 # General CRUD Functions
 
@@ -39,10 +34,6 @@ def add_single_entity(session, entity_type, name, population=0, area=0):
             )
         )
 
-
-# add_single_entity(session, State, "California", 40000000, 423967)
-# add_single_entity(session, City, "Los Angeles", 4000000, 503)
-# add_single_entity(session, County, "Los Angeles County", 10000000, 4750)
 
 def update_entity_attribute(session, entity_type, entity_name, attribute, new_value):
     # Convert space-separated attribute names to snake_case
@@ -96,11 +87,6 @@ def delete_entity_by_name(session, entity_cls, entity_name):
 
 
 
-# delete_entity_by_name(session, State, "California")
-# delete_entity_by_name(session, County, "Los Angeles County")
-# delete_entity_by_name(session, City, "Los Angeles")
-
-
 def populate_city_facility_association(values_list):
     """Populate the association table between cities and facilities."""
     sql = text(
@@ -126,59 +112,6 @@ def populate_city_facility_association(values_list):
                     "red",
                 )
             )
-
-
-
-
-
-
-from sqlalchemy import or_, and_
-from sqlalchemy import exc
-
-geolocator = Nominatim(user_agent="geoapiExercises")
-
-def update_city_coordinates(city_name=None):
-    """Update city coordinates using the geolocation service. If city_name is provided, updates only for that city."""
-    with Session() as session:
-        # Filter criteria for latitude and longitude values equal to 0 or None
-        filter_criteria = or_(
-            and_(City.latitude == 0, City.longitude == 0),
-            and_(City.latitude == None, City.longitude == None)
-        )
-
-        # If a city_name is provided, add it to the filter criteria
-        if city_name:
-            filter_criteria &= (City.name == city_name)
-
-        # Fetch cities based on filter criteria
-        cities_to_update = session.query(City).filter(filter_criteria).all()
-
-        for city in cities_to_update:
-            retries = 3
-            for attempt in range(retries):
-                try:
-                    location = geolocator.geocode(f"{city.name}")
-                    if location:
-                        city.latitude = location.latitude
-                        city.longitude = location.longitude
-                        session.add(city)  # Ensure changes are staged for commit
-                    break  # Exit the retry loop if successful
-                except (exc.GeocoderServiceError, exc.GeocoderUnavailable):
-                    pass  # Continue to the next attempt
-                except Exception as e:
-                    pass
-
-                # Delay between retries with increasing interval
-                if attempt < retries - 1:
-                    time.sleep(2 ** attempt)
-
-        # Commit all changes after updating cities
-        try:
-            session.commit()
-        except Exception as e:
-            session.rollback()
-
-
 
 
 def print_animated_text(text, delay=0.1):

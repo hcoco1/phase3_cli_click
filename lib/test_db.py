@@ -10,12 +10,10 @@ from display import (
     display_entity,
 )
 from helpers import (
-    update_city_coordinates,
     add_single_entity,
     update_entity_attribute,
     delete_entity_by_name,
 )
-from weather import get_weather
 from db.seed import session
 
 
@@ -48,7 +46,6 @@ def test_db(user_name):
             "c": {"type": County, "name": "county", "display": display_counties},
         }
 
-
         choice = input(colored("Enter your choice: ", "red"))
         if choice == "1":
             display_states(session)
@@ -62,20 +59,14 @@ def test_db(user_name):
             if entity_choice in entity_map:
                 entity_info = entity_map[entity_choice]
                 entity_type = entity_info["type"]
-                extra_ops = entity_info.get("extra_ops", [])
-
+                
                 name = input(colored(f"Enter {entity_type.__name__.lower()} name: ", "blue")).strip().lower()
                 
                 # prompts for population and area
                 add_single_entity(session, entity_type=entity_type, name=name.title(), population=0, area=0)
                 
-                for operation in extra_ops:
-                    if operation == update_city_coordinates:
-                        operation(city_name=name.title())
-                    elif operation == get_weather:
-                        print(operation(name.title()))
-                
                 display_entity(session, entity_type=entity_type, entity_name=name.title())
+
 
 
         elif choice == "3":
