@@ -15,68 +15,28 @@
 
 ## Phase 3 Project: Database Tool.
 
-##### Phase 2 Project repository link: https://github.com/hcoco1/phase2app
+##### Phase 2 Project repository link: https://github.com/hcoco1/phase3_cli_click
 
-##### Database repository link: https://github.com/hcoco1/phase3_cli_click
 
-#### Project Pitch
 
-**Database Tool (DT)** is a PYTHON/SQLALCHEMY/CLICK command line interface (CLI) designed to offer a comprehensive management system for US entities like states, cities, and counties.  Users can effortlessly navigate through a color-coded menu, making CRUD (Create, Read, Update, Delete) operations more intuitive than ever. Whether you're looking to display all entities, add a new city, or even fetch the latest weather updates for it. Additionally, the tool integrates advanced features such as updating city coordinates and instant weather insights, ensuring users are equipped with the most recent data
+### Project Pitch
+
+**Database Tool (DT)** is a SQLALCHEMY/SQLITE3/CLICK command line interface (CLI) designed to manage US entities like states, cities, and counties.  Users can effortlessly navigate through a color-coded menu, making CRUD (Create, Read, Update, Delete) operations more intuitive than ever. Whether you're looking to display all entities, add a new city, or even fetch the latest weather updates for it. Additionally, the tool integrates advanced features such as updating city coordinates and instant weather insights.
 
 ## Installation instructions:
 1. Fork and clone this repository.
 2. Open the project directory in your terminal.
-3. Install the dependencies using the following command:
+3. Install the dependencies using the following commands:
 ```
-    npm install <dependency-name> --save
-
+    pipenv install
+    pipenv shell
+    pip install -r requirements.txt
 ```
-Replace <dependency-name> with the name of the dependency you want to install. For example, to install the bootstrap dependency, you would use the following command:
+4. Once all of the dependencies have been installed, you must navigate to the lib folder and start the CLI using the following command:
 ```
-    npm install bootstrap --save
-
-```
-4. Once all of the dependencies have been installed, you can start the development server using the following command:
-```
-    npm start
-
-```
-The development server will start on port 3000. You can access the app at http://localhost:3000.
-
-Here is a complete list of the commands you need to run:
-
-Clone repository:
-```
-git clone git@github.com:hcoco1/phase2app.git
+    python user.py
 ```
 
-Open the project directory in your terminal
-```
-cd phase2app
-```
-
-Install the dependencies:
-```
-npm install bootstrap chart.js mdb-react-ui-kit mdb-ui-kit modern-normalize react-bootstrap react-chartjs-2 react-dom react-hook-form react-icons react-router-dom react-table react-table-plugins react-table-sticky semantic-ui-css semantic-ui-react --save
-```
----
-Users have to follow these additional steps before start the App:
-
-* Bootstrap : <a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/" target="_blank">https://getbootstrap.com/docs/5.3/getting-started/introduction/</a>
-
-* Material Design for Bootstrap 5 & React 18: <a href="https://mdbootstrap.com/docs/react/getting-started/installation/" target="_blank">https://mdbootstrap.com/docs/react/getting-started/installation/</a>
-
-* Material Design for Bootstrap 5 & Vanilla JavaScript: <a href="https://mdbootstrap.com/docs/standard/" target="_blank">https://mdbootstrap.com/docs/standard/</a>
-
-* Semantic UI: <a href="https://semantic-ui.com/introduction/getting-started.html" target="_blank">https://semantic-ui.com/introduction/getting-started.html</a>
-
-* Semantic UI React: <a href="https://react.semantic-ui.com/usage" target="_blank">https://react.semantic-ui.com/usage</a>
----
-
-Start the development server:
-```
-npm start
-```
 
 ## How to navigate in RES:
 
