@@ -1,16 +1,10 @@
 # Standard library imports
 import sys
-
 from io import StringIO
-
 # Third-party library imports
-from prettytable import PrettyTable
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from termcolor import colored
 import pyfiglet
 import requests
-
 # Application/library specific imports
 from start import start
 from weather import get_weather

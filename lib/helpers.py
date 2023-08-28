@@ -7,7 +7,7 @@ from termcolor import colored
 from db.models import State, County, City, Facilities
 from geopy.geocoders import Nominatim
 from geopy import exc
-from db.seed import Session, session
+from db.seed import Session
 from sqlalchemy.exc import SQLAlchemyError
 logging.basicConfig(level=logging.INFO)
 

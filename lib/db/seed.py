@@ -1,7 +1,7 @@
 import click
-from  models import State, County, City, Facilities, association_table as CityFacilityAssociation, Base
+from db.models import State, County, City, Facilities, association_table as CityFacilityAssociation, Base
 from sqlalchemy.orm import sessionmaker
-from data import states_to_add, counties_to_add, cities_to_add, facilities_to_add, association_to_add
+from db.data import states_to_add, counties_to_add, cities_to_add, facilities_to_add, association_to_add
 from sqlalchemy import create_engine, inspect
 
 DATABASE_URL = "sqlite://///home/hcoco1/Development/code/phase-3/phase3_cli_click/lib/db/geodata.db"

@@ -1,20 +1,4 @@
-from models import State, County, City, Facilities, association_table as CityFacilityAssociation
-
-
-
-"""
-DATABASE_URL = "sqlite://///home/hcoco1/Development/code/phase-3/phase3_cli_click/lib/db/geodata.db"
-engine = create_engine(DATABASE_URL)
-Session = sessionmaker(bind=engine)
-session = Session()
-all_county_ids = [county.id for county in session.query(County.id).all()]
-
-"""
-
-
-
-
-
+from db.models import State, County, City, Facilities, association_table as CityFacilityAssociation
 
 
 states_to_add = [
@@ -225,7 +209,7 @@ association_to_add = [
 
 
 
-"""
+
 weather_icons = {
     "clear sky": "☀️",
     "few clouds": "⛅",
@@ -303,7 +287,7 @@ weather_icons = {
 
 
 
-
+"""
 
 association_to_add = [
         CityFacilityAssociation (city_id = 1, facility_id = 3),
