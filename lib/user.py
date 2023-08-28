@@ -4,7 +4,6 @@ from io import StringIO
 # Third-party library imports
 from termcolor import colored
 import pyfiglet
-import requests
 # Application/library specific imports
 from start import start
 from weather import get_weather

@@ -213,3 +213,9 @@ This project is licensed under the terms of the MIT license. For more details, r
 
 * **Database Design**: Ensuring the database design was both efficient and scalable proved to be a challenge, especially with the many-to-many relationships between cities and facilities.
 * **Error Handling**: Implementing robust error handling to ensure the tool doesn't crash during user interactions required extensive testing and refining.
+
+
+#### **Future Enhancements**
+
+* Geolocation Integration: Integrating the geolocation service to fetch and update city coordinates was challenging due to rate limits and ensuring accuracy of data. This feature will be implemented in the future.
+* Associate methods: The associate methods are not fully implemented yet. The goal is to be able to associate a city with a facility and vice versa. This feature will be implemented in the future.
