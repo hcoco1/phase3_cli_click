@@ -53,6 +53,12 @@
 <div align="center">
 
 ---
+![how this app works](https://github.com/hcoco1/phase3_cli_click/blob/main/cli_gif.gif?raw=true) 
+
+
+
+
+
 
 ![how this app works](https://github.com/hcoco1/phase3_cli_click/blob/main/db_diagram.png?raw=true) 
 
