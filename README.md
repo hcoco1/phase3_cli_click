@@ -15,7 +15,7 @@
 
 ## Phase 3 Project: Database Tool.
 
-##### Phase 2 Project repository link: https://github.com/hcoco1/phase3_cli_click
+##### Phase 3 Project repository link: https://github.com/hcoco1/phase3_cli_click
 
 
 
@@ -45,8 +45,9 @@
 ```
     python user.py
 ```
-If you want to check  a step-by-step tutorial of a reduced version of this project, please click on the following link:
-https://blog-sbun.onrender.com/coding/2023/08/27/aggregate-functions-In-SQLAlchemy.html
+If you want to check a step-by-step installation process tutorial of a reduced version of this project, please click on the following link:
+
+ * https://blog-sbun.onrender.com/coding/2023/08/27/aggregate-functions-In-SQLAlchemy.html
 
 ## How to navigate in DT:
 
@@ -70,11 +71,6 @@ Delete Entity: Delete an entity from the database by selecting it and confirming
 Count the number of cities: Get a count of all cities in a given state
 
 Exit: Exit to the main menu
-
-
-
-
-
 
 
 
@@ -128,9 +124,8 @@ Exit: Exit to the main menu
 
 
 ### Database schema
-The database schema is designed using SQLAlchemy, a SQL toolkit and Object-Relational Mapping (ORM) library for Python.
 
-The Cities table is represented by a model class, with columns such as id (a primary key column that uses an integer type for unique city identification), name (a string column for the city's name), population (an integer column for the number of residents), area (an integer column representing the city's area in square units), latitude and longitude (both float columns for geolocation purposes), and county_name (a string column that provides a relational link to its respective county).
+The database schema is designed using SQLAlchemy. The Cities table is represented by a model class, with columns such as id (a primary key column that uses an integer type for unique city identification), name (a string column for the city's name), population (an integer column for the number of residents), area (an integer column representing the city's area in square units), latitude and longitude (both float columns for geolocation purposes), and county_name (a string column that provides a relational link to its respective county).
 
 The Counties table has a similar structure, with an id column serving as a primary key, and other columns like name, population, and area defined as string, integer, and float data types respectively.
 
@@ -216,5 +211,5 @@ This project is licensed under the terms of the MIT license. For more details, r
 
 #### **Challenges**
 
-Database Design: Ensuring the database design was both efficient and scalable proved to be a challenge, especially with the many-to-many relationships between cities and facilities.
-Error Handling: Implementing robust error handling to ensure the tool doesn't crash during user interactions required extensive testing and refining.
+* **Database Design**: Ensuring the database design was both efficient and scalable proved to be a challenge, especially with the many-to-many relationships between cities and facilities.
+* **Error Handling**: Implementing robust error handling to ensure the tool doesn't crash during user interactions required extensive testing and refining.
