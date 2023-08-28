@@ -21,7 +21,7 @@
 
 ### Project Pitch
 
-**Database Tool (DT)** is a SQLALCHEMY/SQLITE3/CLICK command line interface (CLI) designed to manage US entities like states, cities, and counties.  Users can effortlessly navigate through a color-coded menu, making CRUD (Create, Read, Update, Delete) operations more intuitive than ever. Whether you're looking to display all entities, add a new city, or even fetch the latest weather updates for it. 
+**Database Tool (DT)** is a SQLALCHEMY/SQLITE3/CLICK command line interface (CLI) designed to manage US entities like states, cities, and counties.  Users can effortlessly navigate through a color-coded menu, making CRUD (Create, Read, Update, Delete) operations more intuitive than ever. Whether you're looking to display all entities, add a new city, play a game or even fetch the latest weather updates for it. 
 
 <div align="center">
 
@@ -45,7 +45,8 @@
 ```
     python user.py
 ```
-
+If you want to check  a step-by-step tutorial of a reduced version of this project, please click on the following link:
+https://blog-sbun.onrender.com/coding/2023/08/27/aggregate-functions-In-SQLAlchemy.html
 
 ## How to navigate in DT:
 
