@@ -39,7 +39,8 @@
 ```
     pipenv install
     pipenv shell
-    pip install -r requirements.txt
+    pipenv install ipdb sqlalchemy alembic pyfiglet termcolor faker requests python-dotenv prettytable click
+
 ```
 4. Once all of the dependencies have been installed, you must navigate to the lib folder and start the CLI using the following command:
 ```
