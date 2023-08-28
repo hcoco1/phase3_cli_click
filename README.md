@@ -21,11 +21,7 @@
 
 #### Project Pitch
 
-**Database Tool (DT)** is a PYTHON/SQLALCHEMY/CLICK command line interface (CLI) that accesses data from a web database. RES returns a collection of real estate properties for sale and rent. Each property has 13 attributes (id, address, city, state, zip code, listing price, bedrooms, bathrooms, square feet, listing date, property type, operation type, and image).
-
- The App fetches all the data as soon the browser load. Users can navigate between different links thanks to react-router features. Also, users can filter and search properties by price, property type, and operation type.
-
-Additionally, the user can view details about a property by clicking the View button, and immediately they will be sent to a new view where only the selected property is shown. Also, the users can access more images and the delete button in the detail view. Finally, users can add a new property to the database by filling out the form. Also, The user can view some statistic charts in the chart tab.
+**Database Tool (DT)** is a PYTHON/SQLALCHEMY/CLICK command line interface (CLI) designed to offer a comprehensive management system for US entities like states, cities, and counties.  Users can effortlessly navigate through a color-coded menu, making CRUD (Create, Read, Update, Delete) operations more intuitive than ever. Whether you're looking to display all entities, add a new city, or even fetch the latest weather updates for it. Additionally, the tool integrates advanced features such as updating city coordinates and instant weather insights, ensuring users are equipped with the most recent data
 
 ## Installation instructions:
 1. Fork and clone this repository.
