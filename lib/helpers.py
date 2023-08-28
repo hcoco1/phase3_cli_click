@@ -7,11 +7,11 @@ from termcolor import colored
 from db.models import State, County, City, Facilities
 from geopy.geocoders import Nominatim
 from geopy import exc
-from db.seed import Session
+from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 logging.basicConfig(level=logging.INFO)
 
-
+sessionmaker = sessionmaker()
 user_agent_name = "GeoApp v1.0 (hcoco1@hotmail.com.com)"
 geolocator = Nominatim(user_agent=user_agent_name)
 logging.getLogger("geopy").setLevel(logging.INFO)

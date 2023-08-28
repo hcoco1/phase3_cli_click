@@ -4,8 +4,8 @@ import time # For sleep function
 from termcolor import colored
 from pyfiglet import figlet_format
 from prettytable import PrettyTable
-from helpers import print_animated_text
-from db.data import states_to_add
+from helpers import print_animated_text, State
+
 
 
 
@@ -20,7 +20,7 @@ def play_game(session):
     start_time = datetime.datetime.now()
     correct_guesses = 0
     for _ in range(5):  # Loop for exactly 5 questions
-        state = random.choice(states_to_add)  # Choose a random state
+        state = random.choice(states_to_play)  # Choose a random state
         state_name = state.name
         capital_guess = (
             input(colored(f"What is the capital city of {state_name}? ", "yellow"))
@@ -113,3 +113,352 @@ def display_user_scores():
     print("-" * len("User's Scores"))
 
     print(table)
+    
+states_to_play = [
+    State(
+        name="Alabama",
+        abbreviation="AL",
+        population=4903185,
+        capital="Montgomery",
+        area=52420,
+    ),
+    State(
+        name="Alaska",
+        abbreviation="AK",
+        population=731545,
+        capital="Juneau",
+        area=665384,
+    ),
+    State(
+        name="Arizona",
+        abbreviation="AZ",
+        population=7278717,
+        capital="Phoenix",
+        area=113990,
+    ),
+    State(
+        name="Arkansas",
+        abbreviation="AR",
+        population=3017804,
+        capital="Little Rock",
+        area=53179,
+    ),
+    State(
+        name="California",
+        abbreviation="CA",
+        population=39538223,
+        capital="Sacramento",
+        area=163695,
+    ),
+    State(
+        name="Colorado",
+        abbreviation="CO",
+        population=5773714,
+        capital="Denver",
+        area=104094,
+    ),
+    State(
+        name="Connecticut",
+        abbreviation="CT",
+        population=3565287,
+        capital="Hartford",
+        area=5543,
+    ),
+    State(
+        name="Delaware",
+        abbreviation="DE",
+        population=973764,
+        capital="Dover",
+        area=2489,
+    ),
+    State(
+        name="Florida",
+        abbreviation="FL",
+        population=21538187,
+        capital="Tallahassee",
+        area=65758,
+    ),
+    State(
+        name="Georgia",
+        abbreviation="GA",
+        population=10617423,
+        capital="Atlanta",
+        area=59425,
+    ),
+    State(
+        name="Hawaii",
+        abbreviation="HI",
+        population=1455271,
+        capital="Honolulu",
+        area=10932,
+    ),
+    State(
+        name="Idaho", abbreviation="ID", population=1787065, capital="Boise", area=83569
+    ),
+    State(
+        name="Illinois",
+        abbreviation="IL",
+        population=12671821,
+        capital="Springfield",
+        area=57914,
+    ),
+    State(
+        name="Indiana",
+        abbreviation="IN",
+        population=6732219,
+        capital="Indianapolis",
+        area=36420,
+    ),
+    State(
+        name="Iowa",
+        abbreviation="IA",
+        population=3155070,
+        capital="Des Moines",
+        area=56273,
+    ),
+    State(
+        name="Kansas",
+        abbreviation="KS",
+        population=2913314,
+        capital="Topeka",
+        area=82278,
+    ),
+    State(
+        name="Kentucky",
+        abbreviation="KY",
+        population=4467673,
+        capital="Frankfort",
+        area=40408,
+    ),
+    State(
+        name="Louisiana",
+        abbreviation="LA",
+        population=4648794,
+        capital="Baton Rouge",
+        area=52378,
+    ),
+    State(
+        name="Maine",
+        abbreviation="ME",
+        population=1344212,
+        capital="Augusta",
+        area=35380,
+    ),
+    State(
+        name="Maryland",
+        abbreviation="MD",
+        population=6045680,
+        capital="Annapolis",
+        area=12406,
+    ),
+    State(
+        name="Massachusetts",
+        abbreviation="MA",
+        population=6892503,
+        capital="Boston",
+        area=10554,
+    ),
+    State(
+        name="Michigan",
+        abbreviation="MI",
+        population=9986857,
+        capital="Lansing",
+        area=96714,
+    ),
+    State(
+        name="Minnesota",
+        abbreviation="MN",
+        population=5639632,
+        capital="Saint Paul",
+        area=86936,
+    ),
+    State(
+        name="Mississippi",
+        abbreviation="MS",
+        population=2976149,
+        capital="Jackson",
+        area=48432,
+    ),
+    State(
+        name="Missouri",
+        abbreviation="MO",
+        population=6137428,
+        capital="Jefferson City",
+        area=69707,
+    ),
+    State(
+        name="Montana",
+        abbreviation="MT",
+        population=1068778,
+        capital="Helena",
+        area=147040,
+    ),
+    State(
+        name="Nebraska",
+        abbreviation="NE",
+        population=1934408,
+        capital="Lincoln",
+        area=77348,
+    ),
+    State(
+        name="Nevada",
+        abbreviation="NV",
+        population=3080156,
+        capital="Carson City",
+        area=110572,
+    ),
+    State(
+        name="New Hampshire",
+        abbreviation="NH",
+        population=1359711,
+        capital="Concord",
+        area=9349,
+    ),
+    State(
+        name="New Jersey",
+        abbreviation="NJ",
+        population=8882190,
+        capital="Trenton",
+        area=8723,
+    ),
+    State(
+        name="New Mexico",
+        abbreviation="NM",
+        population=2117522,
+        capital="Santa Fe",
+        area=121590,
+    ),
+    State(
+        name="New York",
+        abbreviation="NY",
+        population=19453561,
+        capital="Albany",
+        area=54555,
+    ),
+    State(
+        name="North Carolina",
+        abbreviation="NC",
+        population=10488084,
+        capital="Raleigh",
+        area=53819,
+    ),
+    State(
+        name="North Dakota",
+        abbreviation="ND",
+        population=762062,
+        capital="Bismarck",
+        area=70698,
+    ),
+    State(
+        name="Ohio",
+        abbreviation="OH",
+        population=11689100,
+        capital="Columbus",
+        area=44826,
+    ),
+    State(
+        name="Oklahoma",
+        abbreviation="OK",
+        population=3956971,
+        capital="Oklahoma City",
+        area=69903,
+    ),
+    State(
+        name="Oregon",
+        abbreviation="OR",
+        population=4217737,
+        capital="Salem",
+        area=98379,
+    ),
+    State(
+        name="Pennsylvania",
+        abbreviation="PA",
+        population=12801989,
+        capital="Harrisburg",
+        area=46054,
+    ),
+    State(
+        name="Rhode Island",
+        abbreviation="RI",
+        population=1059361,
+        capital="Providence",
+        area=1545,
+    ),
+    State(
+        name="South Carolina",
+        abbreviation="SC",
+        population=5148714,
+        capital="Columbia",
+        area=32020,
+    ),
+    State(
+        name="South Dakota",
+        abbreviation="SD",
+        population=884659,
+        capital="Pierre",
+        area=77116,
+    ),
+    State(
+        name="Tennessee",
+        abbreviation="TN",
+        population=6829174,
+        capital="Nashville",
+        area=42144,
+    ),
+    State(
+        name="Texas",
+        abbreviation="TX",
+        population=28995881,
+        capital="Austin",
+        area=268596,
+    ),
+    State(
+        name="Utah",
+        abbreviation="UT",
+        population=3271616,
+        capital="Salt Lake City",
+        area=84897,
+    ),
+    State(
+        name="Vermont",
+        abbreviation="VT",
+        population=623989,
+        capital="Montpelier",
+        area=9616,
+    ),
+    State(
+        name="Virginia",
+        abbreviation="VA",
+        population=8535519,
+        capital="Richmond",
+        area=42775,
+    ),
+    State(
+        name="Washington",
+        abbreviation="WA",
+        population=7614893,
+        capital="Olympia",
+        area=71298,
+    ),
+    State(
+        name="West Virginia",
+        abbreviation="WV",
+        population=1792147,
+        capital="Charleston",
+        area=24230,
+    ),
+    State(
+        name="Wisconsin",
+        abbreviation="WI",
+        population=5822434,
+        capital="Madison",
+        area=65496,
+    ),
+    State(
+        name="Wyoming",
+        abbreviation="WY",
+        population=578759,
+        capital="Cheyenne",
+        area=97813,
+    ),
+]
