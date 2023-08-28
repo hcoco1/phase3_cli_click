@@ -41,10 +41,9 @@ def count_facilities_in_city(city_name):
     count = session.query(func.count(Facilities.id)).join(association_table).join(City).filter(City.name == city_name).scalar()
     click.echo(f"The number of facilities in {city_name} is: {count}")
 
-cli.add_command(count_facilities_in_city)
+
 
 session.close()
-
 cli.add_command(count_cities_in_state)
 cli.add_command(average_city_population_in_state)
 cli.add_command(total_area_in_county)
