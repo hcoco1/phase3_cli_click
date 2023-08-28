@@ -23,6 +23,15 @@
 
 **Database Tool (DT)** is a SQLALCHEMY/SQLITE3/CLICK command line interface (CLI) designed to manage US entities like states, cities, and counties.  Users can effortlessly navigate through a color-coded menu, making CRUD (Create, Read, Update, Delete) operations more intuitive than ever. Whether you're looking to display all entities, add a new city, or even fetch the latest weather updates for it. 
 
+<div align="center">
+
+---
+![how this app works](https://github.com/hcoco1/phase3_cli_click/blob/main/cli_gif.gif?raw=true) 
+
+---
+
+</div>
+
 ## Installation instructions:
 1. Fork and clone this repository.
 2. Open the project directory in your terminal.
@@ -65,54 +74,24 @@ Exit: Exit to the main menu
 
 
 
-<div align="center">
 
----
-![how this app works](https://github.com/hcoco1/phase3_cli_click/blob/main/cli_gif.gif?raw=true) 
-
----
-
-</div>
 
 
 ### **Project Structure**
 ```
 .
 ├── LICENSE
-├── NOTES.md
 ├── Pipfile
 ├── Pipfile.lock
 ├── README.md
 ├── __init__.py
-├── __pycache__
-│   ├── cli.cpython-38.pyc
-│   ├── data.cpython-38.pyc
-│   ├── display.cpython-38.pyc
-│   ├── helpers.cpython-38.pyc
-│   ├── models.cpython-38.pyc
-│   ├── seed.cpython-38.pyc
-│   └── user_interaction.cpython-38.pyc
 ├── alembic.ini
-├── blog
-│   └── README.md
 ├── cli_gif.gif
 ├── db_diagram.png
 ├── geodata.db
 ├── lib
-│   ├── __pycache__
-│   │   ├── display.cpython-38.pyc
-│   │   ├── game.cpython-38.pyc
-│   │   ├── helpers.cpython-38.pyc
-│   │   ├── start.cpython-38.pyc
-│   │   ├── test_db.cpython-38.pyc
-│   │   └── weather.cpython-38.pyc
 │   ├── db
 │   │   ├── __init__.py
-│   │   ├── __pycache__
-│   │   │   ├── __init__.cpython-38.pyc
-│   │   │   ├── data.cpython-38.pyc
-│   │   │   ├── models.cpython-38.pyc
-│   │   │   └── seed.cpython-38.pyc
 │   │   ├── data.py
 │   │   ├── geodata.db
 │   │   ├── models.py
@@ -122,13 +101,9 @@ Exit: Exit to the main menu
 │   ├── helpers.py
 │   ├── others
 │   │   ├── __init__.py
-│   │   ├── __pycache__
-│   │   │   └── aggregate_methods.cpython-38.pyc
 │   │   ├── aggregate_methods.py
 │   │   ├── associate_methods.py
-│   │   ├── debug.py
-│   │   ├── populate_associations.py
-│   │   └── remove_cache.py
+│   │   └── debug.py
 │   ├── start.py
 │   ├── test_db.py
 │   ├── user.py
@@ -137,23 +112,17 @@ Exit: Exit to the main menu
 │   └── weather.py
 ├── migrations
 │   ├── README
-│   ├── __pycache__
-│   │   └── env.cpython-38.pyc
 │   ├── env.py
 │   ├── script.py.mako
 │   └── versions
 │       ├── 006895a8c21a_add_fk_to_classes.py
-│       ├── __pycache__
-│       │   ├── 006895a8c21a_add_fk_to_classes.cpython-38.pyc
-│       │   ├── c5fcbfbc59f7_states_and_counties_related.cpython-38.pyc
-│       │   └── e3fb3d80e214_initial_stage.cpython-38.pyc
 │       ├── c5fcbfbc59f7_states_and_counties_related.py
 │       └── e3fb3d80e214_initial_stage.py
 ├── requirements.txt
 └── video
     └── README.md
 
-13 directories, 61 files
+6 directories, 35 files
 ```
 
 
@@ -237,14 +206,14 @@ CREATE TABLE IF NOT EXISTS "CityFacilityAssociation" (
 ```
 
 
+#### **Contributions**
+Feel free to fork this project and submit your PRs. Any contributions to enhance the features or improve the tool are welcome!
 
-
+#### **License**
+This project is licensed under the terms of the MIT license. For more details, refer to the LICENSE file.
 
 
 #### **Challenges**
 
- 1. 
-
- 2. 
-
- 3. 
+Database Design: Ensuring the database design was both efficient and scalable proved to be a challenge, especially with the many-to-many relationships between cities and facilities.
+Error Handling: Implementing robust error handling to ensure the tool doesn't crash during user interactions required extensive testing and refining.
