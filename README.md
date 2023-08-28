@@ -21,7 +21,7 @@
 
 ### Project Pitch
 
-**Database Tool (DT)** is a SQLALCHEMY/SQLITE3/CLICK command line interface (CLI) designed to manage US entities like states, cities, and counties.  Users can effortlessly navigate through a color-coded menu, making CRUD (Create, Read, Update, Delete) operations more intuitive than ever. Whether you're looking to display all entities, add a new city, or even fetch the latest weather updates for it. Additionally, the tool integrates advanced features such as updating city coordinates and instant weather insights.
+**Database Tool (DT)** is a SQLALCHEMY/SQLITE3/CLICK command line interface (CLI) designed to manage US entities like states, cities, and counties.  Users can effortlessly navigate through a color-coded menu, making CRUD (Create, Read, Update, Delete) operations more intuitive than ever. Whether you're looking to display all entities, add a new city, or even fetch the latest weather updates for it. 
 
 ## Installation instructions:
 1. Fork and clone this repository.
@@ -38,11 +38,30 @@
 ```
 
 
-## How to navigate in RES:
+## How to navigate in DT:
 
- Users can access the app data through four main links in the navigation bar: Home, Properties, Tables, and Charts.
+After launching the tool using the python user.py command, users will be greeted with a color-coded menu. From here, you can:
 
-1. Once the page load, the home page shows a few images and some information about real estate.
+Manage the database: Create, Read, Update, and Delete entities.
+
+Play CapitalStates game: Test your knowledge of US state capitals by answering a series of questions.
+
+Get the latest weather updates: Fetch the latest weather updates for a city of your choice.
+
+Sub menu: Navigate to a sub menu to perform more specific operations:
+
+Display Entities: Choose the entity you want to display, whether it's states, cities, or counties, and the tool will provide a list of all entities in the database.
+
+Add New Entity: Easily add a new state, city, or county by providing the necessary details.
+Update Entity: Modify existing entities by specifying the attribute you wish to change and providing the new value.
+
+Delete Entity: Delete an entity from the database by selecting it and confirming your choice.
+
+Count the number of cities: Get a count of all cities in a given state
+
+Exit: Exit to the main menu
+
+
 
 
 
@@ -138,11 +157,20 @@
 ```
 
 
-
-
- 
-
 ### Database schema
+The database schema is designed using SQLAlchemy, a SQL toolkit and Object-Relational Mapping (ORM) library for Python.
+
+The Cities table is represented by a model class, with columns such as id (a primary key column that uses an integer type for unique city identification), name (a string column for the city's name), population (an integer column for the number of residents), area (an integer column representing the city's area in square units), latitude and longitude (both float columns for geolocation purposes), and county_name (a string column that provides a relational link to its respective county).
+
+The Counties table has a similar structure, with an id column serving as a primary key, and other columns like name, population, and area defined as string, integer, and float data types respectively.
+
+The Facilities table, on the other hand, is designed to capture details about various establishments. It includes columns such as id (a primary key), name, description (both of which are string columns), and facility_type (a string column that specifies the kind of facility, such as 'hospital' or 'school').
+
+The States table is defined with columns including id (primary key), name, abbreviation (a short form representation of state names, e.g., 'CA' for California, defined as a string column), population (integer), capital (string), and area (float, denoting the geographical expanse of the state).
+
+Lastly, the CityFacilityAssociation table is a classical association table in SQLAlchemy terms, set up to handle a many-to-many relationship between cities and facilities. It doesn't have its own primary key but uses a combination of city_id and facility_id as foreign keys, referencing the id columns of the Cities and Facilities tables respectively. This setup allows for the creation of a bidirectional relationship between the two tables, managed via SQLAlchemy's relationship function in the ORM layer.
+
+Relationships:
 
 **One-to-Many Relationships**:
 
