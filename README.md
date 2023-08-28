@@ -44,73 +44,78 @@
 
 1. Once the page load, the home page shows a few images and some information about real estate.
 
-2. All the data is fetched in the properties tab. The user can scroll down and check the collection of properties. There are two nested tabs in  Properties: List and Add New Property. The List tab is, by default, where all data is displayed. By clicking the view button on a property card, users will be sent to a new view where only the selected property is shown. Also, the users can access more images, and a delete button is in the detail view. The user will be sent to the List tab by clicking the List button. The Add New Property tab is where the user adds new real estate properties in the database.
 
-3. A table is shown in the Table tab. It contains information on seven attributes (id,  city, state, listing price,  square feet,  property type, and operation type). Users can sort the attributes by clicking on the table header. Additionally, users can search for a specific detail by typing in the search text box input located about the table.
-
-4. Two statistics charts are shown in the Charts tab. A bar chart and a line chart show information about how properties prices in Texas state. If the user hovers over the graph, some information will be displayed.
 
 <div align="center">
 
 ---
 ![how this app works](https://github.com/hcoco1/phase3_cli_click/blob/main/cli_gif.gif?raw=true) 
 
-
-
-
-
-
-![how this app works](https://github.com/hcoco1/phase3_cli_click/blob/main/db_diagram.png?raw=true) 
-
-
- 
 ---
-
 
 </div>
 
 
 ### **Project Structure**
-
- Real Estate Site runs on a single page and has Eighteen  JSX components.
 ```
 .
+├── LICENSE
+├── NOTES.md
 ├── Pipfile
 ├── Pipfile.lock
 ├── README.md
+├── __init__.py
 ├── __pycache__
-│   ├── test_fake_data.cpython-38.pyc
-│   └── test_helpers.cpython-38.pyc
+│   ├── cli.cpython-38.pyc
+│   ├── data.cpython-38.pyc
+│   ├── display.cpython-38.pyc
+│   ├── helpers.cpython-38.pyc
+│   ├── models.cpython-38.pyc
+│   ├── seed.cpython-38.pyc
+│   └── user_interaction.cpython-38.pyc
 ├── alembic.ini
+├── blog
+│   └── README.md
+├── cli_gif.gif
+├── db_diagram.png
+├── geodata.db
 ├── lib
-│   ├── __init__.py
 │   ├── __pycache__
-│   │   ├── __init__.cpython-38.pyc
-│   │   ├── cli.cpython-38.pyc
+│   │   ├── display.cpython-38.pyc
+│   │   ├── game.cpython-38.pyc
 │   │   ├── helpers.cpython-38.pyc
-│   │   └── test_helpers.cpython-38.pyc
-│   ├── cli.py
+│   │   ├── start.cpython-38.pyc
+│   │   ├── test_db.cpython-38.pyc
+│   │   └── weather.cpython-38.pyc
 │   ├── db
 │   │   ├── __init__.py
 │   │   ├── __pycache__
 │   │   │   ├── __init__.cpython-38.pyc
 │   │   │   ├── data.cpython-38.pyc
-│   │   │   ├── display.cpython-38.pyc
 │   │   │   ├── models.cpython-38.pyc
 │   │   │   └── seed.cpython-38.pyc
 │   │   ├── data.py
-│   │   ├── display.py
 │   │   ├── geodata.db
 │   │   ├── models.py
-│   │   ├── seed.py
-│   │   └── seed_all_data.py
-│   ├── debug.py
+│   │   └── seed.py
+│   ├── display.py
+│   ├── game.py
 │   ├── helpers.py
-│   ├── populate_association.py
-│   └── user_interactions
-│       ├── user_details.txt
-│       ├── user_interaction.py
-│       └── user_scores.txt
+│   ├── others
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   └── aggregate_methods.cpython-38.pyc
+│   │   ├── aggregate_methods.py
+│   │   ├── associate_methods.py
+│   │   ├── debug.py
+│   │   ├── populate_associations.py
+│   │   └── remove_cache.py
+│   ├── start.py
+│   ├── test_db.py
+│   ├── user.py
+│   ├── user_details.txt
+│   ├── user_scores.txt
+│   └── weather.py
 ├── migrations
 │   ├── README
 │   ├── __pycache__
@@ -118,79 +123,45 @@
 │   ├── env.py
 │   ├── script.py.mako
 │   └── versions
+│       ├── 006895a8c21a_add_fk_to_classes.py
 │       ├── __pycache__
+│       │   ├── 006895a8c21a_add_fk_to_classes.cpython-38.pyc
+│       │   ├── c5fcbfbc59f7_states_and_counties_related.cpython-38.pyc
 │       │   └── e3fb3d80e214_initial_stage.cpython-38.pyc
+│       ├── c5fcbfbc59f7_states_and_counties_related.py
 │       └── e3fb3d80e214_initial_stage.py
-└── requirements.txt
+├── requirements.txt
+└── video
+    └── README.md
 
-```
-
- 
-
- 
-
- 
- 
- Also, RES uses seven client-side routes (four nested). Users can navigate between routes using the navigation bar and the nested menu.
- 
-Component App:
-
-
-```javascript
-<Container>
-  <Row>
-    <Col lg>
-      <NavigationBar />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='charts' element={<PropertyCharts properties={properties} />}></Route>
-        <Route path='search' element={<SearchTable properties={properties} />}></Route>
-        <Route path='/properties/' element={<Properties />}>
-          <Route path='list' element={<ListProperties properties={properties} onUpdate={handleCurrentProperty} />} />
-          <Route path='add' element={<AddProperty onhandleAddProperty={handleAddProperty} setProperties={setProperties} property={currentProperty} />} />
-          <Route path=':id' element={<PropertyDisplay properties={properties} property={currentProperty} onhandleDeletedProperty={handleDeletedProperty} />} />
-          <Route path='*' element={<NoMatch />} />
-        </Route>
-      </Routes>
-    </Col>
-  </Row>
-</Container>
-```
-Component NavigationBar:
-
-```javascript
-<Navbar collapseOnSelect expand="lg" className="bg-body-tertiary" sticky="top" >
-  <Container>
-    <Navbar.Brand>
-      <Link className="linkNav" to="/">Home</Link>
-    </Navbar.Brand>
-    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-    <Navbar.Collapse id="responsive-navbar-nav">
-      <Nav className="me-auto">
-        <NavLink id="RouterNavLink" className="linkNav" to="properties/list">Properties</NavLink>
-        <NavLink id="RouterNavLink" className="linkNav" to="/search">Search</NavLink>
-        <NavLink id="RouterNavLink" className="linkNav" to="charts">Charts</NavLink>
-      </Nav>
-    </Navbar.Collapse>
-  </Container>
-</Navbar>
+13 directories, 61 files
 ```
 
 
-Additionally, RES uses three RESTful routing conventions:
 
-| Route   Name    | URL             | HTTP Verb | Description                |
-|-----------------|-----------------|-----------|----------------------------|
-| ListProperties  | properties/list | GET       | Display all properties     |
-| AddProperty     | properties/add  | POST      | Add new property to db     |
-| PropertyDisplay | properties/:id  | DELETE    | Delete a specific property |
+
+ 
+
+### Database schema
+
+**One-to-Many Relationships**:
+
+State and County: One state can have multiple counties. This is established using the state_id foreign key in the County class and the counties relationship in the State class.
+State and City: Similarly, one state can have multiple cities. This is established using the state_id foreign key in the City class and the cities relationship in the State class.
+County and City: One county can have multiple cities. This is set up using the county_id foreign key in the City class and the cities relationship in the County class.
+
+**Many-to-Many Relationships**:
+
+City and Facilities: A city can have multiple facilities and a facility can be present in multiple cities. The City and Facilities have a many-to-many relationship, which is achieved using the association_table as a secondary table. This table doesn't have its own ORM class representation; instead, it's a  table representation in SQLAlchemy.
+The relationship function uses a secondary parameter to specify the association_table, creating the many-to-many linkage.
+
+
+ <div align="center">
 
 ---
-### Backend Setup
-
-**Real Estate Site (RES)**  makes GET, POST, and DELETE requests to the " properties " web database. The POST request is managed for a controlled form using a "react-hook-form" hook.
-
-Database Structure
+![how this app works](https://github.com/hcoco1/phase3_cli_click/blob/main/db_diagram.png?raw=true) 
+---
+</div>
 
 
 
@@ -240,32 +211,12 @@ CREATE TABLE IF NOT EXISTS "CityFacilityAssociation" (
 
 
 
- Some of the dependencies of **Real Estate Site** are:
-
-| #  	| Dependencies                               	|
-|----	|--------------------------------------------	|
-| 1  	|           "bootstrap": "^5.3.0",           	|
-| 2  	|           "chart.js": "^4.3.0",            	|
-| 3  	|           "mdb-react-ui-kit": "^6.1.0",    	|
-| 4  	|           "mdb-ui-kit": "^6.4.0",          	|
-| 5  	|           "modern-normalize": "^2.0.0",    	|
-| 6  	|           "react-bootstrap": "^2.7.4",     	|
-| 7  	|           "react-chartjs-2": "^5.2.0",     	|
-| 8  	|           "react-dom": "^18.2.0",          	|
-| 9  	|           "react-hook-form": "^7.45.0",    	|
-| 10 	|           "react-icons": "^4.9.0",         	|
-| 11 	|           "react-router-dom": "^6.13.0",   	|
-| 12 	|           "react-table": "^7.8.0",         	|
-| 13 	|           "react-table-plugins": "^1.3.4", 	|
-| 14 	|           "react-table-sticky": "^1.1.3",  	|
-| 15 	|           "semantic-ui-css": "^2.5.0",     	|
-| 16 	|           "semantic-ui-react": "^2.1.4",   	|
 
 
-##### **Challenges**
+#### **Challenges**
 
- 1. Write a clean code / Use Folders to organize the components. 
+ 1. 
 
- 2. Responsive design.
+ 2. 
 
- 3. Update the state of the modal components.
+ 3. 
