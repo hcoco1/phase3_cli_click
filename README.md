@@ -154,8 +154,12 @@ The relationship function uses a secondary parameter to specify the association_
 
 ---
 ![how this app works](https://github.com/hcoco1/phase3_cli_click/blob/main/db_diagram.png?raw=true) 
+
 ---
 </div>
+
+##### Figma link: https://www.figma.com/file/cYSYdTecovja4q5QVNooFS/Untitled?type=design&node-id=0%3A1&mode=design&t=nkX47i0uXBQFIvrb-1
+##### Dbdiagram.io link: https://dbdiagram.io/d/64dbe90102bd1c4a5ed38fae
 
 
 
