@@ -1,15 +1,10 @@
 import datetime
 import random
-import time # For sleep function
 from termcolor import colored
 from pyfiglet import figlet_format
 from prettytable import PrettyTable
 from helpers import print_animated_text
 from db.models import State
-
-
-
-
 
 
 def play_game(session):
@@ -20,7 +15,7 @@ def play_game(session):
     print_animated_text(colored("Type 'exit' anytime to quit the game.\n", "blue"))
     start_time = datetime.datetime.now()
     correct_guesses = 0
-    for _ in range(5):  # Loop for exactly 5 questions
+    for _ in range(2):  # Loop for exactly 5 questions
         state = random.choice(states_to_play)  # Choose a random state
         state_name = state.name
         capital_guess = (
@@ -32,7 +27,7 @@ def play_game(session):
         if capital_guess == "exit":
             print(
                 colored(
-                    f"Thanks for playing! You guessed {correct_guesses}/5 capitals correctly.",
+                    f"Thanks for playing! You guessed {correct_guesses}/2 capitals correctly.",
                     "green",
                 )
             )
@@ -49,11 +44,11 @@ def play_game(session):
 
     print(
         colored(
-            f"Thanks for playing! You guessed {correct_guesses}/5 capitals correctly.",
+            f"Thanks for playing! You guessed {correct_guesses}/2 capitals correctly.",
             "green",
         )
     )
-    print(f"You took {elapsed_time.total_seconds():.2f} seconds to answer 5 questions.")
+    print(f"You took {elapsed_time.total_seconds():.2f} seconds to answer 2 questions.")
 
     return correct_guesses, elapsed_time.total_seconds()  # Return the results
 

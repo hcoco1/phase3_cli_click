@@ -1,3 +1,5 @@
 ## Phase3 Project video URL
 
-**comming soon!
+### Video URL
+https://youtu.be/UrotTLXdx5c
+
