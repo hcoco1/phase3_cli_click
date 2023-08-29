@@ -38,7 +38,8 @@ def test_db(user_name):
         print(colored("3. Update an US Entity (State/City/County)", "yellow"))
         print(colored("4. Delete an US Entity (State/City/County)", "yellow"))
         print(colored("5. Count the number of cities in a given state", "yellow"))
-        print(colored("6. Main Menu", "yellow"))
+        print(colored("6. Move a city to a different county", "yellow"))
+        print(colored("7. Main Menu", "yellow"))
         
         entity_map = {
             "a": {"type": State, "name": "state", "display": display_states},
@@ -83,7 +84,7 @@ def test_db(user_name):
                     update_entity_attribute(session, entity_type=entity_type, entity_name=entity_name_input.title(), attribute=attribute, new_value=new_value)
                     
                     display_entity(session, entity_type=entity_type, entity_name=entity_name_input.title())
-                    entity_info["display"](session)
+                    #entity_info["display"](session)
 
         elif choice == "4":
             entity_choice = choose_entity()
@@ -100,7 +101,24 @@ def test_db(user_name):
             count = session.query(func.count(City.id)).join(State).filter(State.name == state_name).scalar()
             print(colored(f"The number of cities in {state_name} is: {count}", "blue"))
 
+
         elif choice == "6":
+                city_name = input(colored("Enter city: ", "blue")).title()
+                new_county_name = input(colored("Enter county: ", "blue")).title()
+                city = session.query(City).filter_by(name=city_name).first()
+                new_county = session.query(County).filter_by(name=new_county_name).first()
+                
+                if not city or not new_county:
+                        print(f"City {city_name} or County {new_county_name} not found!")
+                        return
+
+                city.county = new_county
+                session.commit()
+                print(colored(f"Moved City {city_name} to County {new_county_name}!", "blue"))
+
+
+
+        elif choice == "7":
             print(colored("Redirecting to the main Menu!", "magenta"))
             break
         else:
