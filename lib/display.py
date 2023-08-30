@@ -1,5 +1,5 @@
 from prettytable.colortable import ColorTable, Themes, Theme
-from db.models import State, County, City, Facilities
+from lib.db.models import State, County, City, Facilities
 
 # ALL STATES
 def display_states(session):

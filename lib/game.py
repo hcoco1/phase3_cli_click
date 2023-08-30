@@ -3,8 +3,10 @@ import random
 from termcolor import colored
 from pyfiglet import figlet_format
 from prettytable import PrettyTable
-from helpers import print_animated_text
-from db.models import State
+from lib.helpers import print_animated_text
+from lib.db.models import State
+
+
 
 
 def play_game(session):

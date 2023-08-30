@@ -1,11 +1,9 @@
 import pyfiglet
 import os
-from db.data import weather_icons
-from io import StringIO
+from lib.db.data import weather_icons
 from termcolor import colored
 import logging
 import requests
-import sys
 from dotenv import load_dotenv
 
 

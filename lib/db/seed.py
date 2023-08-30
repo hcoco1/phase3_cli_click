@@ -1,6 +1,3 @@
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 import click
 from lib.db.models import State, County, City, Facilities, association_table as CityFacilityAssociation, Base
 from lib.db.data import states_to_add, counties_to_add, cities_to_add, facilities_to_add, association_to_add
@@ -85,13 +82,13 @@ if __name__ == '__main__':
     print("🌱 Seeding DB...")
     cli()
 
-# To create Tables: python seed.py create-tables
-# To seed states: python seed.py seed-states
-# To seed counties: python seed.py seed-counties
-# To seed cities: python seed.py seed-cities
-# To seed facilities: python seed.py seed-facilities
-# To seed associations: python seed.py seed-associations
-
+#python -m lib.db.seed 
+#python -m lib.db.seed create-tables
+#python -m lib.db.seed seed-states
+#python -m lib.db.seed seed-counties
+#python -m lib.db.seed seed-cities
+#python -m lib.db.seed seed-facilities
+#python -m lib.db.seed seed-associations
 
 
 

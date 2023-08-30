@@ -42,9 +42,9 @@
     pipenv install ipdb sqlalchemy alembic pyfiglet termcolor faker requests python-dotenv prettytable click
 
 ```
-4. Once all of the dependencies have been installed, you must navigate to the lib folder and start the CLI using the following command:
+4. Once all of the dependencies have been installed, you can open a terminal ans start the CLI using the following command:
 ```
-    pipenv run python user.py
+    python -m lib.user
 ```
 If you want to check a step-by-step installation process tutorial of a reduced version of this project, please click on the following link:
 
@@ -149,6 +149,46 @@ County and City: One county can have multiple cities. This is set up using the c
 City and Facilities: A city can have multiple facilities and a facility can be present in multiple cities. The City and Facilities have a many-to-many relationship, which is achieved using the association_table as a secondary table. This table doesn't have its own ORM class representation; instead, it's a  table representation in SQLAlchemy.
 The relationship function uses a secondary parameter to specify the association_table, creating the many-to-many linkage.
 
+### Seed Data
+The database was populate using the seed.py file. You can run (from the root) the seed.py file using the following commands :
+
+```Python
+ python -m lib.db.seed   #To seed: all data
+ python -m lib.db.seed create-tables  #To create tables
+ python -m lib.db.seed seed-states  #To seed: states
+ python -m lib.db.seed seed-counties  #To seed: counties
+ python -m lib.db.seed seed-cities  #To seed: cities
+ python -m lib.db.seed seed-facilities  #To seed: facilities
+ python -m lib.db.seed seed-associations  #To seed: associations
+```
+
+    ```Python
+    @click.group()
+    def cli():
+        """Manage the database records."""
+        pass
+    
+    @cli.command()
+    def seed_states():
+        """ Seed states."""
+        session.query(State).delete()
+        session.commit()
+        session.add_all(states_to_add)
+        session.commit()
+        click.echo("✅ Done seeding states!")
+    
+    
+    @cli.command()
+    def seed_counties():
+        """ Seed counties."""
+        session.query(County).delete()
+        session.commit()
+        session.add_all(counties_to_add)
+        session.commit()
+        click.echo("✅ Done seeding counties!")
+        
+        # more click commands
+    ```
 
  <div align="center">
 

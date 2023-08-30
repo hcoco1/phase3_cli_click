@@ -2,7 +2,7 @@ import sys
 import datetime
 import pyfiglet
 from termcolor import colored
-from helpers import print_animated_text
+from lib.helpers import print_animated_text
 
 
 GOODBYE_MESSAGE = pyfiglet.figlet_format("Goodbye!")

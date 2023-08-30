@@ -1,20 +1,21 @@
 import pyfiglet
 from sqlalchemy import func
 from termcolor import colored
-from db.models import State, City, County
-from display import (
+from lib.db.models import State, City, County
+
+from .display import (
     display_states,
     display_counties,
     display_cities,
     display_facilities,
     display_entity,
 )
-from helpers import (
+from lib.helpers import (
     add_single_entity,
     update_entity_attribute,
     delete_entity_by_name,
 )
-from db.seed import session
+from lib.db.seed import session
 
 
 def choose_entity():

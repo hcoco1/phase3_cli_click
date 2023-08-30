@@ -4,12 +4,12 @@ import sys
 from termcolor import colored
 import pyfiglet
 # Application/library specific imports
-from start import start
-from weather import get_weather
-from game import play_game, save_user_score, display_user_scores
-from db.seed import session
-from test_db import test_db, session
-from helpers import print_animated_text
+from .start import start
+from .weather import get_weather
+from .game import play_game, save_user_score, display_user_scores
+from .db.seed import session as seed_session
+from .test_db import test_db, session as test_db_session
+from .helpers import print_animated_text
 
 # Constants
 INVALID_CHOICE_MESSAGE = pyfiglet.figlet_format("Invalid choice. Please try again.")
@@ -33,7 +33,7 @@ def main():
             if choice == "1":
                 test_db(user_name)
             elif choice == "2":
-                score, time_taken = play_game(session)
+                score, time_taken = play_game(seed_session)
                 save_user_score(
                     name=user_name,
                     score=score,
@@ -57,3 +57,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+#python -m lib.user

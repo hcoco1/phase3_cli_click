@@ -1,4 +1,4 @@
-from db.models import State, City, County, Facilities
+from lib.db.models import State, City, County, Facilities
 from faker import Faker
 fake = Faker()
 
