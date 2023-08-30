@@ -44,7 +44,7 @@
 ```
 4. Once all of the dependencies have been installed, you must navigate to the lib folder and start the CLI using the following command:
 ```
-    python user.py
+    pipenv run python user.py
 ```
 If you want to check a step-by-step installation process tutorial of a reduced version of this project, please click on the following link:
 
