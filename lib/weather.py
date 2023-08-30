@@ -39,7 +39,7 @@ def get_weather(cityname):
 
         # Construct the final message 
         final_message = (
-            f"\nWeather in \n {city_colored} {temperature:.1f}°C, "
+            f"\nWeather in \n {city_colored} {temperature:.1f}°F, "
             f"{weather_icon}   {weather_status.capitalize()}\n"
         )
 
