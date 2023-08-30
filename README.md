@@ -42,7 +42,7 @@
     pipenv install ipdb sqlalchemy alembic pyfiglet termcolor faker requests python-dotenv prettytable click
 
 ```
-4. Once all of the dependencies have been installed, you can open a terminal ans start the CLI using the following command:
+4. Once all of the dependencies have been installed, you can open a terminal and start the CLI using the following command:
 ```
     python -m lib.user
 ```
@@ -154,7 +154,6 @@ The database was populate using the seed.py file. You can run (from the root) th
 
 ```Python
  python -m lib.db.seed   #To seed: all data
- python -m lib.db.seed create-tables  #To create tables
  python -m lib.db.seed seed-states  #To seed: states
  python -m lib.db.seed seed-counties  #To seed: counties
  python -m lib.db.seed seed-cities  #To seed: cities
