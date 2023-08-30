@@ -1,6 +1,9 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 import click
-from db.models import State, County, City, Facilities, association_table as CityFacilityAssociation, Base
-from db.data import states_to_add, counties_to_add, cities_to_add, facilities_to_add, association_to_add
+from lib.db.models import State, County, City, Facilities, association_table as CityFacilityAssociation, Base
+from lib.db.data import states_to_add, counties_to_add, cities_to_add, facilities_to_add, association_to_add
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine, inspect
 from faker import Faker

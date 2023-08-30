@@ -1,6 +1,5 @@
 # Standard library imports
 import sys
-from io import StringIO
 # Third-party library imports
 from termcolor import colored
 import pyfiglet
