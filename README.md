@@ -15,7 +15,8 @@
 
 ## Phase 3 Project: Database Tool.
 
-##### Phase 3 Project repository link: https://github.com/hcoco1/phase3_cli_click
+### Phase 3 Project repository link: https://github.com/hcoco1/phase3_cli_click
+### Demo video link: https://youtu.be/UrotTLXdx5c
 
 
 
