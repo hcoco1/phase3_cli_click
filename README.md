@@ -47,9 +47,6 @@
 ```
     python -m lib.user
 ```
-If you want to check a step-by-step installation process tutorial of a reduced version of this project, please click on the following link:
-
- * https://blog-sbun.onrender.com/coding/2023/08/27/aggregate-functions-In-SQLAlchemy.html
 
 ## How to navigate in DT:
 
